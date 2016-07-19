@@ -1,0 +1,48 @@
+<div class="container">
+  <br>
+  <form ng-submit="submissionForm()">
+  <fieldset class="form-group">
+    <label for="exampleInputEmail1">Medical License Number</label>
+    <input type="text" class="form-control" placeholder="Medical License Number" ng-model="submission.medicalLicenseNumber">
+    <small class="text-muted">We'll never share your personal information with anyone else.</small>
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="exampleInputEmail1">Clinic Name</label>
+    <input type="text" class="form-control" placeholder="Clinic Name" ng-model="submission.clinicName">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="exampleInputEmail1">Clinic Street</label>
+    <input type="text" class="form-control" placeholder="Clinic Street" ng-model="submission.street">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="exampleInputEmail1">Clinic City</label>
+    <input type="text" class="form-control" placeholder="Clinic City" ng-model="submission.city">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="exampleInputEmail1">Clinic Zip Code</label>
+    <input type="text" class="form-control" placeholder="Clinic Zip Code" ng-model="submission.zipCode">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="exampleInputEmail1">Clinic State</label>
+    <input type="text" class="form-control" placeholder="Clinic State" ng-model="submission.state">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="exampleInputEmail1">Clinic Phone Number</label>
+    <input type="text" class="form-control" placeholder="Clinic Phone Number" ng-model="submission.phoneNumber">
+  </fieldset>
+  <fieldset><div class="form-group">
+        <label for="disabledSelect">Country</label>
+          <select class="form-control" ng-model="submission.country">
+            <option>United States of America</option>
+          </select>
+          <small class="text-muted">docAPPT is only avaiable in the United States of America.</small>
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="exampleTextarea">Clinic Description</label>
+    <textarea class="form-control" rows="3" ng-model="submission.description">
+    </textarea>
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Apply</button>
+</form>
+
+</div>

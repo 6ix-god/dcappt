@@ -1,0 +1,123 @@
+<div class="container"><br>
+   <section>
+      <div class="page-header">
+         <div class="row">
+            <div class="col-md-9">
+               <div class="pull-right">
+                  <button class="btn btn-warning btn-sm visible-xs visible-sm" data-target="#subforum-list" data-toggle="collapse" onclick="$(this).toggleClass('active');">
+                  <i class="fa fa-th-list"></i>
+                  Subforums
+                  </button>
+               </div>
+               <h1 style="margin-top: 0">Admin Panel
+                  <small>Approve, manage, and write articles.</small>
+               </h1>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-3 forum-sidebar">
+            <div class="collapse" id="subforum-list">
+               <ul class="nav nav-pills nav-stacked">
+               </ul>
+               <h4>Clinics</h4>
+               <ul class="nav nav-pills nav-stacked">
+                  <li class="active">
+                     <a href="">Clinic Submissions
+                     </a>
+                  </li>
+                  <li>
+                     <a href="">Exsisting Clinics
+                     </a>
+                  </li>
+               </ul>
+               <h4>Support</h4>
+               <ul class="nav nav-pills nav-stacked">
+                  <li>
+                     <a href="">Bug Reports
+                     </a>
+                  </li>
+                  <li>
+                     <a href="">Customer Support
+                     </a>
+                  </li>
+               </ul>
+               <h4>Blog</h4>
+               <ul class="nav nav-pills nav-stacked">
+                  <li>
+                     <a href="">Create new Post
+                     </a>
+                  </li>
+                  <li>
+                     <a href="">Recent Posts
+                     </a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="col-md-9 clearfix">
+            <div class="forum-header">
+               <h3>What's New</h3>
+            </div>
+            <div class="listing">
+               <div class="row headings">
+                  <div class="col-xs-12 col-sm-7" style="padding-left: 45px;">Clinic Name</div>
+                  <div class="hidden-xs col-sm-3 col-sm-offset-0">Applicant</div>
+                  <div class="hidden-xs col-sm-1 text-center">Submitted</div>
+               </div>
+               <div class="row topic" ng-repeat="submission in submissions">
+                  <div class="col-xs-12 col-sm-7">
+                     <div class="topic-listing-entry">
+                        <div class="topic-listing-entry-title">
+                          <span>
+                           <a href="">{{submission.clinicName}}</a>
+                           &nbsp;
+                           <a class="label" style="background-color: #FFEE58; color: white" href="#">Pending</a>
+                         </span>
+                           <div>
+
+                          </div>
+                        </div>
+                        <small class="started-by">
+                        {{submission.street}}, {{submission.city}} {{submission.state}} {{submission.zipCode}}. {{submission.country}}
+                        </small>
+                     </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-3">
+                     <div style="position:relative">
+                        <a class="pull-left hidden-xs" style="position:relative; margin: 4px 5px 0 0;">
+                        <img style="width: 32px;height: 32px;border-radius: 3px;vertical-align: bottom;" width="32" height="32" class="avatar" src="https://lh3.googleusercontent.com/-hMc92L1bTw4/AAAAAAAAAAI/AAAAAAAAAAA/q7C3_uBZp2w/photo.jpg" alt="Called_" title="Called_">
+                        </a>
+                        <div class="latest-post">
+                           <span class="visible-xs-inline">
+                           Latest:
+                           <img style="width: 14px;height: 14px;border-radius: 3px;margin-left: 3px;vertical-align: bottom;" width="14" height="14" class="avatar" src="https://avatar.oc.tc/d754c3c1b3e643ff86d21c06d5b501d8/14@2x.png" alt="Called_" title="Called_">
+                           </span>
+                           <a style="color: #08c; " href="/Called_">{{submission.applicant.firstName}} {{submission.applicant.lastName}}</a>
+                           <div class="visible-xs-inline visible-sm-block visible-md-block visible-lg-block">
+                              <i class="fa fa-phone" aria-hidden="true"></i><small>&nbsp;{{submission.phoneNumber}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="hidden-xs col-sm-2">
+                     <p id="dateCreated">{{submission.dateCreated}}</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</div>
+
+<script>
+
+$(document).ready(function(){
+
+  var dateCreated = $('#dateCreated');
+  var fromNow = moment(dateCreated).fromNow();
+  dateCreated.html(fromNow);
+
+});
+
+</script>

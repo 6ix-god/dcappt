@@ -1,0 +1,35 @@
+{
+  "name": "protoapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Peter Soboyejo <thepcmrtim@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "agenda": "^0.8.1",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "gulp": "^3.9.1",
+    "gulp-angular-templatecache": "^2.0.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-csso": "^2.0.0",
+    "gulp-ng-annotate": "^2.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-uglify": "^1.5.4",
+    "moment": "^2.14.1",
+    "mongoose": "^4.5.3",
+    "morgan": "^1.7.0",
+    "nodemailer": "^2.4.2",
+    "nodemailer-express-handlebars": "^2.0.0",
+    "passport": "^0.3.2",
+    "passport-http-bearer": "^1.0.1",
+    "path": "^0.12.7",
+    "rand-token": "^0.2.1"
+  }
+}

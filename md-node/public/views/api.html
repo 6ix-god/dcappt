@@ -1,0 +1,321 @@
+<div class="container">
+   </p>URL Endpoint: <code>do.petersoboyejo.com</code>
+   <br>
+   </center>
+   <br>
+   <code>GET /api/v1</code><br>
+   <h3><b>Response</b></h3>
+   <table class="table" style="margin-top: 10px;">
+      <tbody>
+         <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+            <th>Description</th>
+         </tr>
+         <tr>
+            <td>message</td>
+            <td>String</td>
+            <td>Simple Message response.</td>
+         </tr>
+      </tbody>
+   </table>
+   <pre align="left">
+{
+  "message": "docAPPT API v1"
+}</pre>
+   <br>
+   <code>POST /api/v1/login</code><br>
+   <br>
+   <b>Content-Type: application/x-www-form-urlencoded</b><br><br>
+   <h3><b>Input (Form Data)</b></h3>
+   <table class="table" style="margin-top: 10px;">
+      <tbody>
+         <tr>
+            <th>Key</th>
+            <th>Value</th>
+         </tr>
+         <tr>
+            <td>email</td>
+            <td>Exsisting docAPPT Email Address.</td>
+         </tr>
+         <tr>
+            <td>password</td>
+            <td>Password Associated with exsisting account.</td>
+         </tr>
+      </tbody>
+   </table>
+   <h3><b>Response</b></h3>
+   <table class="table" style="margin-top: 10px;">
+      <tbody>
+         <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+            <th>Description</th>
+         </tr>
+         <tr>
+            <td>token</td>
+            <td>String</td>
+            <td>Beaer Authentication Token</td>
+         </tr>
+      </tbody>
+   </table>
+   <pre align="left">
+{
+  "token": "pr7btcNYWxvECdsF"
+}</pre>
+   <br>
+   <code>POST /api/v1/register</code><br>
+   <br>
+   <b>Content-Type: application/x-www-form-urlencoded</b><br><br>
+   <h3><b>Input (Form Data)</b></h3>
+   <table class="table" style="margin-top: 10px;">
+      <tbody>
+         <tr>
+            <th>Key</th>
+            <th>Value</th>
+         </tr>
+         <tr>
+            <td>email</td>
+            <td>Email Address</td>
+         </tr>
+         <tr>
+            <td>password</td>
+            <td>Password designated to new user</td>
+         </tr>
+         <tr>
+            <td>phoneNumber</td>
+            <td>Mobile/Cell Phone Number to contact</td>
+         </tr>
+         <tr>
+            <td>firstName</td>
+            <td>Legal first name</td>
+         </tr>
+         <tr>
+            <td>lastName</td>
+            <td>Legal last name</td>
+         </tr>
+         <tr>
+            <td>zipCode</td>
+            <td>Zip code associated with address.</td>
+         </tr>
+         <tr>
+            <td>street</td>
+            <td>User's street name.</td>
+         </tr>
+         <tr>
+            <td>city</td>
+            <td>City associated with address.</td>
+         </tr>
+         <tr>
+            <td>state</td>
+            <td>State located in the United States of America.</td>
+         </tr>
+         <tr>
+            <td>country</td>
+            <td>Default (United States of America)</td>
+         </tr>
+         <tr>
+            <td>gender</td>
+            <td>Gender associated with user</td>
+         </tr>
+         <tr>
+            <td>dob</td>
+            <td>Date of Birth</td>
+         </tr>
+      </tbody>
+   </table>
+   <h3><b>Response:</b></h3>
+   <table class="table" style="margin-top: 10px;">
+      <tbody>
+         <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+            <th>Description</th>
+         </tr>
+         <tr>
+            <td>email</td>
+            <td>String</td>
+            <td>Email Address</td>
+         </tr>
+         <tr>
+            <td>gender</td>
+            <td>String</td>
+            <td>Gender associated with user</td>
+         </tr>
+         <tr>
+            <td>token</td>
+            <td>String</td>
+            <td>Bearer Authentication Token to make user related requests.</td>
+         </tr>
+         <tr>
+            <td>dob</td>
+            <td>Date</td>
+            <td>Date of Birth</td>
+         </tr>
+         <tr>
+            <td>phoneNumber</td>
+            <td>Number</td>
+            <td>US Phone Number assigned to user (10 digits)</td>
+         </tr>
+         <tr>
+            <td>firstName</td>
+            <td>String</td>
+            <td>Legal first name.</td>
+         </tr>
+         <tr>
+            <td>lastName</td>
+            <td>String</td>
+            <td>Legal Last name.</td>
+         </tr>
+         <tr>
+            <td>dateCreated</td>
+            <td>Date (ISO 8601)</td>
+            <td>Date when account was created</td>
+         </tr>
+         <tr>
+            <td>zipCode</td>
+            <td>Number</td>
+            <td>Zip code associated with address</td>
+         </tr>
+         <tr>
+            <td>street</td>
+            <td>String</td>
+            <td>User's street name and number.</td>
+         </tr>
+         <tr>
+            <td>city</td>
+            <td>String</td>
+            <td>City associated with user's address.</td>
+         </tr>
+         <tr>
+            <td>state</td>
+            <td>String</td>
+            <td>User's living state, in the United States</td>
+         </tr>
+         <tr>
+            <td>country</td>
+            <td>String</td>
+            <td>Default (United States of America)</td>
+         </tr>
+         <tr>
+            <td>isDoctor</td>
+            <td>Boolean</td>
+            <td>Usertype: Being a doctor</td>
+         </tr>
+         <tr>
+            <td>isAdmin</td>
+            <td>Boolean</td>
+            <td>Usertype: Official docAPPT Staff</td>
+         </tr>
+         <tr>
+            <td>isStaff</td>
+            <td>Boolean</td>
+            <td>Usertype: Staff associated with an exsisting clinic</td>
+         </tr>
+         <tr>
+            <td>appointments</td>
+            <td>Array</td>
+            <td>List of Booked Appointments made are assigned to a user.</td>
+         </tr>
+      </tbody>
+   </table>
+   <pre align="left">
+{
+  "token": "WvUbMMMUdqxX9UdG",
+  "dateCreated": "13-07-2016",
+  "isStaff": false,
+  "isDoctor": false,
+  "isAdmin": false,
+  "dob": "13-09-2000",
+  "gender": "male",
+  "country": "United States of America",
+  "state": "NJ",
+  "city": "Skillman",
+  "street": "4 Seminole Rd",
+  "zipCode": 08558,
+  "lastName": "Soboyejo",
+  "firstName": "Peter",
+  "phoneNumber": 6092162036,
+  "email": "thepcmrtim@gmail.com",
+  "appointments": []
+}</pre>
+   <br>
+   <code>POST /api/v1/register/doctor</code><br>
+   <br>
+   <b>Content-Type: application/x-www-form-urlencoded</b><br><br>
+   <b>Register as an certified doctor on docAPPT.</b><br><br>
+   <h3><b>Request Parameter's</b></h3>
+   <table class="table" style="margin-top: 10px;">
+      <tbody>
+         <tr>
+            <th>Parameter</th>
+            <th>Description</th>
+         </tr>
+         <tr>
+            <td>access_token</td>
+            <td>You must be authenticated as an exsisting user in order to make a submission as a new doctor. <b>Required</b></td>
+         </tr>
+      <tbody>
+   </table>
+   <h3><b>Input (Form Data)</b></h3>
+   <table class="table" style="margin-top: 10px;">
+      <tbody>
+         <tr>
+            <th>Key</th>
+            <th>Value</th>
+         </tr>
+         <tr>
+            <td>medicalLicenseNumber</td>
+            <td>Medical license number assigned to doctor</td>
+         </tr>
+         <tr>
+            <td>zipCode</td>
+            <td>Clinic Zip Code</td>
+         </tr>
+         <tr>
+            <td>street</td>
+            <td>Clinic street</td>
+         </tr>
+         <tr>
+            <td>city</td>
+            <td>Clinic city location</td>
+         </tr>
+         <tr>
+            <td>state</td>
+            <td>Clinic's postal state location (United States)</td>
+         </tr>
+         <tr>
+            <td>phoneNumber</td>
+            <td>Clinic phone number</td>
+         </tr>
+         <tr>
+            <td>country</td>
+            <td>Default (United States of America)</td>
+         </tr>
+         <tr>
+            <td>description</td>
+            <td>Description/Information about clinic including specialty's and whatnot.</td>
+         </tr>
+      </tbody>
+   </table>
+   <h3><b>Response</b></h3>
+   <table class="table" style="margin-top: 10px;">
+      <tbody>
+         <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+            <th>Description</th>
+         </tr>
+         <tr>
+            <td>message</td>
+            <td>String</td>
+            <td>Response message to submission.</td>
+         </tr>
+      </tbody>
+   </table>
+   <pre align="left">
+{
+  "message": "Your submission has been sucsefully sent to our staff!"
+}</pre>
+   </center>
+</div>

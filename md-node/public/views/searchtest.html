@@ -1,0 +1,55 @@
+<div class ="container">
+  <h4 class="header-title text-center">Search Email Address</h4>
+    <div style="max-width: 800px; margin: auto; margin-top: 10px;">
+      <div id="suggestion" style="text-align: center;">
+        <input id="location-1" type="text" class="form-control typeahead" placeholder="name@domain.com" data-provide="typeahead" autocomplete="off">
+      </div>
+    </div>
+</div>
+    <script>
+      function sug(response){
+        console.log(response);
+      };
+
+      (function(document, jQuery){
+
+        var source = new Bloodhound({
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          identify: function(obj) { console.log(obj); return obj.email; },
+          remote: {
+            url: '/autocomplete/email?query=%QUERY',
+            wildcard: '%QUERY'
+          }
+        });
+
+        jQuery(document).ready(function(){
+
+          jQuery('#suggestion .typeahead').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 2
+          }, {
+            name: 'muse-suggesions',
+            display: 'value',
+            source: source,
+            limit: 15,
+            templates: {
+              empty: [].join('\n'),
+              suggestion: Handlebars.compile('<div>{{email}}</div>')
+            }
+          });
+
+          jQuery('#suggestion .typeahead').bind('typeahead:select', function(ev, suggestion) {
+            console.log('Selection Object: ', suggestion);
+            console.log('Email: ', suggestion.email);
+            console.log('Id: ', suggestion.id);
+            // window.location = "/user/" + this.id; - go to link with uder id
+          });
+        });
+
+
+      }(document, jQuery));
+
+    </script>
+</body>

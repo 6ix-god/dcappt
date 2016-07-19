@@ -1,0 +1,71 @@
+<br><br>
+<div class="container">
+
+  <section>
+    <div class="row">
+      <div class="col-md-12">
+        <h1 style="margin-top: 0">
+        <span style="color: #08c">
+          {{user.firstName}} {{user.lastName}}
+        </span>
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <br>
+
+  <section>
+   <div class="row">
+      <div class="col-md-12">
+         <div class="tabbable">
+            <ul class="nav nav-tabs hidden-sm hidden-xs" id="user-tabs">
+               <li class="active">
+                  <a data-toggle="tab" href="#about" aria-expanded="true">About</a>
+               </li>
+            </ul>
+            <div class="panel-group visible-sm visible-xs" id="user-tabs-accordion"></div>
+            <div class="tab-content hidden-sm hidden-xs" style="overflow: visible;">
+               <div class="tab-pane active" id="about">
+                  <div class="row">
+                     <div class="col-md-4 col-sm-6">
+                        <h5>Email</h5>
+                        <blockquote>
+                           <p>
+                              <a href="mailto:{{user.email}}" target="_blank">{{user.email}}</a>
+                           </p>
+                        </blockquote>
+                     </div>
+                     <div class="col-md-4 col-sm-6">
+                        <h5>Phone Number</h5>
+                        <blockquote>
+                           {{user.phoneNumber}}
+                        </blockquote>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-6">
+                        <h5>Gender</h5>
+                        <pre>{{user.gender}}</pre>
+                     </div>
+                     <div class="col-sm-6">
+                        <h5>Location</h5>
+                        <pre>{{user.street}}, {{user.city}} {{user.state}} {{user.zipCode}}</pre>
+                     </div>
+                     <div class="col-sm-6">
+                        <h5>Appointments Made</h5>
+                        <pre>{{user.appointments.length}}</pre>
+                     </div>
+                     <div class="col-sm-6">
+                        <h5>Joined</h5>
+                        <pre>{{fDob}}</pre>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+</div>

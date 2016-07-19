@@ -1,0 +1,262 @@
+<html ng-app="docAPPTapp" lang="en">
+   <head>
+      <meta content="width=device-width, initial-scale=1" name="viewport">
+      <meta content="#337AB7" name="theme-color">
+      <title>docAPPT</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+      <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Lato:700,400,300">
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css">
+      <link rel="stylesheet" type="text/css" href="css/main.css">
+      <link rel="stylesheet" href="css/animate.css">
+      <script src="https://static.oc.tc/assets/libraries-912fd655d5f42721ec0f4b257ad9e600219d21f56ed23b0125feaf20b7f6e28e.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+      <style type="text/css">.cf-hidden { display: none; } .cf-invisible { visibility: hidden; }</style>
+   </head>
+   <body style="display: block;">
+      <nav class="navbar navbar-default navbar-static-top">
+         <div class="container">
+            <div class="navbar-header">
+               <button class="navbar-toggle collapsed" data-target="#top-navbar-collapse" data-toggle="collapse">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="/">
+               <img class="pull-left" src=""> docAPPT
+               </a>
+            </div>
+            <div ng-controller="NavbarCtrl" class="navbar-collapse collapse" id="top-navbar-collapse">
+               <ul class="nav navbar-nav" style="margin-right: 0;">
+                  <li data-match-route="/$">
+                     <a href="#/">
+                     <i class="fa fa-home"></i> Home
+                     </a>
+                  </li>
+                  <li class="dropdown">
+                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                     <i class="fa fa-user-md"></i> Doctors
+                     <b class="caret"></b>
+                     </a>
+                     <ul class="dropdown-menu">
+                        <li>
+                           <a href="/">
+                           <i class="fa fa-star"></i>
+                           Rankings
+                           </a>
+                        </li>
+                        <li>
+                        </li>
+                        <form class="player-search">
+                           <input class="input-sm form-control" id="player-search" name="search" placeholder="Search for a doctor" type="text">
+                        </form>
+                     </ul>
+                  </li>
+                  <li class="dropdown">
+                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                     <i class="fa fa-building-o"></i> Clinics
+                     <b class="caret"></b>
+                     </a>
+                     <ul class="dropdown-menu">
+                        <li>
+                           <a href="/">
+                           <i class="fa fa-star"></i>
+                           Rankings
+                           </a>
+                        </li>
+                        <li>
+                        </li>
+                        <form class="player-search">
+                           <input class="input-sm form-control" id="player-search" name="search" placeholder="Search for a clinic" type="text">
+                        </form>
+                     </ul>
+                  </li>
+                  <li>
+                    <li class="dropdown">
+                       <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                       <i class="fa fa-building-o"></i> API
+                       <b class="caret"></b>
+                       </a>
+                       <ul class="dropdown-menu">
+                          <li data-match-route="/api">
+                             <a href="#/api">
+                             <i class="fa fa-book"></i>
+                             Documentation
+                             </a>
+                          </li>
+                          <li data-match-route="/email-test">
+                             <a href="#/email-test">
+                             <i class="fa fa-wrench"></i>
+                             Email Autocomplete Search Test
+                             </a>
+                          </li>
+                          <li data-match-route="/currentUser-test">
+                             <a href="#/currentUser-test">
+                             <i class="fa fa-wrench"></i>
+                             Current User Search Test
+                             </a>
+                          </li>
+                       </ul>
+                    </li>
+                    <li data-match-route="#/admin">
+                       <a href="#/admin">
+                       <i class="fa fa-lock"></i> Admin Panel
+                       </a>
+                    </li>
+               </ul>
+               <hr class="visible-xs visible-sm" style="margin: 4px; border-color: #e7e7e7;">
+               <ul class="nav navbar-nav pull-right">
+                  <li class="dropdown">
+                     <a class="dropdown-toggle" data-toggle="dropdown" style="outline: none; " aria-expanded="false">
+                        <i class="fa fa-user"></i>
+                        <div class="visible-xs-inline visible-sm-inline">
+                           Account
+                        </div>
+                        <b class="caret"></b>
+                     </a>
+                     <ul class="dropdown-menu dropdown-menu-right" ng-if="!currentUser">
+                        <li data-match-route="/login">
+                           <a href="#/login">Login</a>
+                        </li>
+                        <li data-match-route="/register">
+                           <a href="#/register">Register</a>
+                        </li>
+                     </ul>
+                     <ul class="dropdown-menu dropdown-menu-right" ng-if="currentUser">
+                        <li>
+                           <a href="javascript:void(0)" ng-click="logout()">Logout</a>
+                        </li>
+                     </ul>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+
+
+      <div ng-view class="{{pageClass}}"></div>
+
+
+    <div class="container">
+    <hr>
+      <footer>
+         <div class="row">
+            <div class="clearfix visible-sm-block" style="padding-bottom: 20px;"></div>
+            <div class="col-md-2 col-sm-4 col-xs-6">
+               <ul class="nav nav-pills nav-stacked">
+                  <li class="heading">
+                     docAPPT
+                  </li>
+                  <li>
+                     <a class="inquiry" data-toggle="modal" href="#contact">About</a>
+                  </li>
+                  <li>
+                     <a class="inquiry" data-toggle="modal" href="#contact">Press</a>
+                  </li>
+                  <li>
+                     <a class="inquiry" data-toggle="modal" href="#contact">FAQ</a>
+                  </li>
+               </ul>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6">
+               <ul class="nav nav-pills nav-stacked">
+                  <li class="heading">
+                     Organization
+                  </li>
+                  <li>
+                     <a class="inquiry" data-toggle="modal" href="#contact">Staff Listing</a>
+                  </li>
+                  <li>
+                     <a class="inquiry" data-toggle="modal" href="#contact">Open Source</a>
+                  </li>
+               </ul>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6">
+               <ul class="nav nav-pills nav-stacked">
+                  <li class="heading">
+                     Policies
+                  </li>
+                  <li>
+                     <a class="inquiry" data-toggle="modal" href="#contact">Terms of Service</a>
+                  </li>
+                  <li>
+                     <a class="inquiry" data-toggle="modal" href="#contact">Privacy Policy</a>
+                  </li>
+               </ul>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6">
+               <ul class="nav nav-pills nav-stacked">
+                  <li class="heading">
+                     Support
+                  </li>
+                  <li>
+                     <a class="inquiry" data-toggle="modal" href="#contact">General Inquiries</a>
+                  </li>
+                  <li>
+                     <a class="inquiry" data-toggle="modal" href="#contact">Bug Reports</a>
+                  </li>
+                  <li>
+                     <a class="inquiry" data-toggle="modal" href="#/register/doctor">Register as a Doctor</a>
+                  </li>
+               </ul>
+            </div>
+            <div class="clearfix visible-xs-block" style="padding-bottom: 20px;"></div>
+            <div class="col-md-2 col-sm-4">
+               <ul class="nav nav-pills nav-stacked follow-us">
+                  <li class="heading">
+                     Follow Us
+                  </li>
+                  <li>
+                     <a href="https://twitter.com/docAPPT">
+                     <img src="https://static.oc.tc/assets/twitter_icon-ce65c4f4c6d6212c05301d0f3c1a38e8a0b6b0baa8c98853b0ddc310372b6e58.png">
+                     Twitter
+                     </a>
+                     <a href="https://www.facebook.com/docAPPT">
+                     <img src="https://static.oc.tc/assets/facebook_icon-34f4e0ba3a52886710c0360d3f8f35352b6c0a73c7181f690c135b1d24eaa8f0.png">
+                     Facebook
+                     </a>
+                  </li>
+               </ul>
+            </div>
+            <div class="clearfix visible-xs-block" style="padding-bottom: 20px;"></div>
+            <div class="col-md-2 col-sm-4" style="text-align: center;">
+               Servers provided by
+               <a href="/host">
+               <img class="img-responsive" width="85%" src="https://upload.wikimedia.org/wikipedia/commons/7/79/DigitalOcean_logo.png">
+               </a>
+               <div class="copyright">&copy; 2016 NguyenTech LLC.</div>
+            </div>
+         </div>
+      </footer>
+    </div>
+
+
+      </body>
+
+      <script src="vendor/angular.js"></script>
+      <script src="vendor/angular-strap.js"></script>
+      <script src="vendor/angular-strap.tpl.js"></script>
+      <script src="vendor/angular-messages.js"></script>
+      <script src="vendor/angular-resource.js"></script>
+      <script src="vendor/angular-route.js"></script>
+      <script src="vendor/angular-animate.js"></script>
+      <script src="vendor/moment.js"></script>
+
+      <script src="app.js"></script>
+      <script src="services/auth.js"></script>
+      <script src="controllers/main.js"></script>
+      <script src="controllers/navbar.js"></script>
+      <script src="controllers/api.js"></script>
+      <script src="controllers/login.js"></script>
+      <script src="controllers/currentUser.js"></script>
+      <script src="controllers/signup.js"></script>
+      <script src="controllers/doctorRegister.js"></script>
+      <script src="controllers/admin.js"></script>
+
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.core.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+
+   </body>
+
+</html>

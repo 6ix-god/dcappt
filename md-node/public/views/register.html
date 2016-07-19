@@ -1,0 +1,63 @@
+<div class="container">
+  <br>
+  <form ng-submit="registerForm()">
+    <fieldset class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" class="form-control"  placeholder="Enter email" ng-model="register.email">
+      <small class="text-muted">We'll never share your email with anyone else.</small>
+    </fieldset>
+    <fieldset class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" placeholder="Password" ng-model="register.password">
+    </fieldset>
+    <fieldset class="form-group">
+      <label for="exampleSelect1">Gender</label>
+      <select class="form-control" ng-model="register.gender">
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+    </fieldset>
+    <fieldset class="form-group">
+      <label for="exampleInputEmail1">First Name</label>
+      <input type="text" class="form-control" placeholder="First Name" ng-model="register.firstName">
+    </fieldset>
+    <fieldset class="form-group">
+      <label for="exampleInputEmail1">Last Name</label>
+      <input type="text" class="form-control" placeholder="Last Name" ng-model="register.lastName">
+    </fieldset>
+    <fieldset class="form-group">
+      <label for="exampleInputEmail1">Phone Number</label>
+      <input type="text" class="form-control" placeholder="Phone Number" ng-model="register.phoneNumber">
+    </fieldset>
+
+    <fieldset class="form-group">
+      <label for="exampleTextarea">Street</label>
+      <input type="text" class="form-control" placeholder="Street" ng-model="register.street">
+    </fieldset>
+
+    <fieldset class="form-group">
+      <label for="exampleTextarea">City</label>
+      <input type="text" class="form-control" placeholder="City" ng-model="register.city">
+    </fieldset>
+
+    <fieldset class="form-group">
+      <label for="exampleTextarea">State</label>
+      <input type="text" class="form-control" placeholder="State" ng-model="register.state">
+    </fieldset>
+
+    <fieldset class="form-group">
+      <label for="exampleInputEmail1">Zip Code</label>
+      <input type="text" class="form-control" placeholder="Zip Code" ng-model="register.zipCode">
+    </fieldset>
+
+      <fieldset><div class="form-group">
+            <label for="disabledSelect">Country</label>
+            <select dd class="form-control" ng-model="register.country">
+              <option>United States of America</option>
+            </select>
+    </div></fieldset>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</div>
