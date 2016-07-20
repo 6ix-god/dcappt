@@ -210,7 +210,7 @@ router.post('/register', function(req, res) {
         subject: 'docAPPT Account Created!',
         template: 'newUser',
         context: {
-          email: req.user.email,
+          email: newUser.email,
           firstName: req.user.firstName
         }
       };
