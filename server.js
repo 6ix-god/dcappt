@@ -106,6 +106,7 @@ var appointmentSchema = new mongoose.Schema({
 });
 
 var clinicSchema = new mongoose.Schema({
+  appointments: [mongoose.Schema.Types.ObjectId],
   name: String,
   paitents: [mongoose.Schema.Types.ObjectId],
   doctors: [mongoose.Schema.Types.ObjectId],
@@ -131,7 +132,16 @@ var submissionSchema = new mongoose.Schema({
   phoneNumber: Number,
   country: String,
   dateCreated: Date
+},
+{
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true }
 });
+
+submissionSchema.options.toJSON.transform = function (doc, ret) {
+    delete ret._id;
+    delete ret.__v;
+};
 
 var User = mongoose.model('User', userSchema);
 var Appointment = mongoose.model('Appointment', appointmentSchema);
@@ -381,19 +391,6 @@ app.put('/user/:id', function(req, res) {
   // updates users  information TODO
 });
 
-// routes for doctors on admin panel
-app.get('/admin', isAuthenticated, function(req, res) {
-  // returns approved and non-approved appointments and shows doctors in current clinic alongside with
-  // paitent's data and whatnot. TODO
-  var structure = {
-    clinicInformation: '',
-    requests: [],
-    rejectedAppointments: [],
-    paitents: [],
-    currentDoctorAuthed: ''
-  };
-
-});
 
 app.post('/panel/approve/:id', isAuthenticated, function(req, res) {
   // approve appointments as a doctor
@@ -465,7 +462,7 @@ router.get('/admin/submissions', isAuthenticated, function(req, res) {
 
 });
 
-app.get('/admin/approve/:id', isAuthenticated, function(req, res) {
+router.put('/admin/approve/:id', isAuthenticated, function(req, res) {
   // approves doctor based off their user id
   Submission.findById(req.params.id, function(err, submission) {
     if (!submission) return res.status(401); // submission doesn't exist
@@ -474,8 +471,11 @@ app.get('/admin/approve/:id', isAuthenticated, function(req, res) {
     // 3 - Send Email that Submission has been approved.
 
     var newClinic = new Clinic({
-      doctors: [submission.applicant],
-      description: submission.description, // TODO: add "description" to submission schema and route
+      name: submission.clinicName,
+      paitents: [],
+      appointments: [],
+      doctors: [submission.applicant.id],
+      description: submission.description,
       phoneNumber: submission.phoneNumber,
       zipCode: submission.zipCode,
       street: submission.street,
@@ -489,22 +489,42 @@ app.get('/admin/approve/:id', isAuthenticated, function(req, res) {
       console.log(newClinic);
     });
 
-    submission.delete(function(err, oldSubmission) {
+    submission.remove(function(err, oldSubmission) {
       if (err) return console.error(err);
       console.log(oldSubmission);
     });
 
     // TODO: Send Email
+    var newClinicMailOptions = {
+        from: 'docAPPT Suuport <skinreserve@gmail.com>',
+        to: submission.applicant.email,
+        subject: 'Congratulations your clinic has been added!',
+        template: 'newClinic',
+        context: {
+          email: req.user.email,
+          firstName: req.user.firstName,
+          clinicLink: ''
+        }
+      };
+
+      transporter.sendMail(newClinicMailOptions, function(error, info){
+        if(error){
+          console.log(error);
+        } else {
+          console.log('Message sent: ' + info.response);
+        }
+        transporter.close();
+      });
 
   });
 });
 
-app.get('/admin/decline/:id', isAuthenticated, function(req, res) {
+router.delete('/admin/decline/:id', isAuthenticated, function(req, res) {
   // approves doctor based off their user id
   Submission.findById(req.params.id, function(err, submission) {
     if (!submission) return res.status(401); // submission doesn't exist
     // 1 - Delete Old Submission
-    submission.delete(function(err, oldSubmission) {
+    submission.remove(function(err, oldSubmission) {
       if (err) return console.error(err);
       console.log(oldSubmission);
     });
