@@ -206,7 +206,7 @@ router.post('/register', function(req, res) {
 
       var submissionMailOptions = {
         from: 'docAPPT Suuport <skinreserve@gmail.com>',
-        to: req.user.email,
+        to: newUser.email,
         subject: 'docAPPT Account Created!',
         template: 'newUser',
         context: {
