@@ -211,7 +211,7 @@ router.post('/register', function(req, res) {
         template: 'newUser',
         context: {
           email: newUser.email,
-          firstName: req.user.firstName
+          firstName: newUser.firstName
         }
       };
 
