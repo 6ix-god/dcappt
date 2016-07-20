@@ -165,7 +165,6 @@ router.get('/', function (req, res) {
 
 router.post('/register', function(req, res) {
 
-  console.log(req.body.email);
 
   var fields = ['email', 'password', 'phoneNumber', 'firstName', 'lastName',
   'zipCode', 'street', 'city', 'state', 'country', 'gender', 'dob'], field;
@@ -185,7 +184,6 @@ router.post('/register', function(req, res) {
       var newUser = new User();
       for (var i = 0; i < fields.length; i++) {
         field = fields[i];
-        console.log(req.body[field]);
         newUser[field] = req.body[field];
       }
 
@@ -250,7 +248,6 @@ router.post('/register/doctor', isAuthenticated, function(req, res, next) {
   Submission.findOne({ applicant: req.user.id }, function(err, submission) {
 
       if (submission) {
-        console.log(submission);
         res.json({'message': 'You have already made a submission'});
       } else {
         var newSubmission = new Submission();
@@ -302,8 +299,6 @@ router.post('/login', function(req, res, next) {
 
   User.findOne({ email: req.body.email }, function (err, user) {
 
-    console.log(req.body.email);
-
     if (err) {
         res.json({"message": "There is no User in our database with the requested ID"});
     }
@@ -325,7 +320,6 @@ router.post('/login', function(req, res, next) {
       var newLoginToken = randtoken.generate(16);
       user.token = newLoginToken;
       user.save();
-      console.log(user.token);
       res.json({ "token": user.token });
 
     });
@@ -456,7 +450,6 @@ router.get('/admin/submissions', isAuthenticated, function(req, res) {
     .populate('applicant')
     .exec(function (err, submissions) {
       if (err) return handleError(err);
-      console.log(submissions);
       res.json(submissions);
     });
 
@@ -464,11 +457,15 @@ router.get('/admin/submissions', isAuthenticated, function(req, res) {
 
 router.put('/admin/approve/:id', isAuthenticated, function(req, res) {
   // approves doctor based off their user id
-  Submission.findById(req.params.id, function(err, submission) {
-    if (!submission) return res.status(401); // submission doesn't exist
-    // 1 - create a clinic with doctor that registerd (changing user field isDcotor to true)
-    // 2 - Delete Old Submission
-    // 3 - Send Email that Submission has been approved.
+
+    Submission
+    .findById(req.params.id)
+    .populate('applicant')
+    .exec(function (err, submission) {
+
+    console.log('Applicant Email: ' + submission.applicant.email);
+
+    if (!submission) return res.status(400).send({ message: 'Submission does not exist' }); // submission doesn't exist
 
     var newClinic = new Clinic({
       name: submission.clinicName,
@@ -484,15 +481,13 @@ router.put('/admin/approve/:id', isAuthenticated, function(req, res) {
       country: submission.country
     });
 
+    var emailMessageTo = submission.applicant.email;
+
     newClinic.save(function(err, newClinic) {
       if (err) return console.error(err);
-      console.log(newClinic);
     });
 
-    submission.remove(function(err, oldSubmission) {
-      if (err) return console.error(err);
-      console.log(oldSubmission);
-    });
+    res.status(200).send({ message: 'Succsefully Added' });
 
     // TODO: Send Email
     var newClinicMailOptions = {
@@ -502,8 +497,7 @@ router.put('/admin/approve/:id', isAuthenticated, function(req, res) {
         template: 'newClinic',
         context: {
           email: req.user.email,
-          firstName: req.user.firstName,
-          clinicLink: ''
+          firstName: req.user.firstName
         }
       };
 
@@ -516,17 +510,43 @@ router.put('/admin/approve/:id', isAuthenticated, function(req, res) {
         transporter.close();
       });
 
+      submission.remove(function(err, oldSubmission) {
+        if (err) return console.error(err);
+      });
+
   });
 });
 
 router.delete('/admin/decline/:id', isAuthenticated, function(req, res) {
   // approves doctor based off their user id
-  Submission.findById(req.params.id, function(err, submission) {
-    if (!submission) return res.status(401); // submission doesn't exist
-    // 1 - Delete Old Submission
+  Submission
+  .findById(req.params.id)
+  .populate('applicant')
+  .exec(function (err, submission) {
+    if (!submission) return res.status(400).send({ message: 'Submission does not exist' });
+
+    var newClinicMailOptions = {
+        from: 'docAPPT Suuport <skinreserve@gmail.com>',
+        to: submission.applicant.email,
+        subject: 'Your docAPPT Clinic Submission has been rejected.',
+        template: 'clinicRejection',
+        context: {
+          email: submission.applicant.email,
+          firstName: submission.applicant.firstName
+        }
+      };
+
+      transporter.sendMail(newClinicMailOptions, function(error, info){
+        if(error){
+          console.log(error);
+        } else {
+          console.log('Message sent: ' + info.response);
+        }
+        transporter.close();
+      });
+
     submission.remove(function(err, oldSubmission) {
       if (err) return console.error(err);
-      console.log(oldSubmission);
     });
   });
 });

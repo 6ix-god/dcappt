@@ -1,5 +1,5 @@
 angular.module('docAPPTapp')
-  .controller('AdminCtrl', function($scope, $http, $alert, $location) {
+  .controller('AdminCtrl', function($scope, $http, $alert, $location, $route) {
 
     $http({
       method: 'GET',
@@ -20,7 +20,8 @@ angular.module('docAPPTapp')
     $scope.acceptSubmission = function(id) {
   		$http.put('/api/v1/admin/approve/' + id)
   			.success(function(data) {
-  				$location.path('/admin');
+          $route.reload();
+          console.log(data);
           $alert({
               content: 'Clinic Added',
               animation: 'fadeZoom',
@@ -31,7 +32,7 @@ angular.module('docAPPTapp')
   			.error(function(data) {
   				console.log('Error: ' + data);
           $alert({
-              content: data,
+              content: data.message,
               animation: 'fadeZoom',
               type: 'material',
               duration: 3
@@ -42,7 +43,8 @@ angular.module('docAPPTapp')
     $scope.rejectSubmission = function(id) {
       $http.delete('/api/v1/admin/decline/' + id)
         .success(function(data) {
-          $location.path('/admin');
+          $route.reload();
+          console.log(data);
           $alert({
               content: 'Clinic Rejected',
               animation: 'fadeZoom',
@@ -53,7 +55,7 @@ angular.module('docAPPTapp')
         .error(function(data) {
           console.log('Error: ' + data);
           $alert({
-              content: data,
+              content: data.message,
               animation: 'fadeZoom',
               type: 'material',
               duration: 3

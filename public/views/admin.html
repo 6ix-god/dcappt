@@ -69,7 +69,7 @@
                      <div class="topic-listing-entry">
                         <div class="topic-listing-entry-title">
                           <span>
-                           <a href="" data-toggle="collapse" data-target="#submissionCollapse" aria-expanded="false" aria-controls="submissionCollapse">{{submission.clinicName}}</a>
+                           <a href="" data-toggle="collapse" data-target="#{{submission.applicant.id}}Collapse" aria-expanded="false" aria-controls="{{submission.applicant.id}}Collapse">{{submission.clinicName}}</a>
                            &nbsp;
                            <a class="label" style="background-color: #FFEE58; color: white" href="#">Pending</a>
                          </span>
@@ -92,7 +92,7 @@
                            </span>
                            <a style="color: #08c; " href="/Called_">{{submission.applicant.firstName}} {{submission.applicant.lastName}}</a>
                            <div class="visible-xs-inline visible-sm-block visible-md-block visible-lg-block">
-                              <i class="fa fa-phone" aria-hidden="true"></i><small>&nbsp;{{submission.phoneNumber}}</small>
+                              <i class="fa fa-phone" aria-hidden="true"></i><small>&nbsp;{{submission.phoneNumber}} (clinic)</small>
                            </div>
                         </div>
                      </div>
@@ -101,7 +101,7 @@
                      <p id="dateCreated">{{submission.dateCreated}}</p>
                   </div>
                   <br><br>
-                   <div class="collapse" id="submissionCollapse">
+                   <div class="collapse" id="{{submission.applicant.id}}Collapse">
                      <div class="thumbnail center-block img-responsive">
                        <b>Medical License Number:</b> {{submission.medicalLicenseNumber}}
                        <br>
@@ -111,7 +111,7 @@
                        <br>
                      </div>
                      <button type="button" class="btn btn-success" ng-click="acceptSubmission(submission.id)">Accept</button>
-                     <button type="button" class="btn btn-danger" ng-click="rejectSubmission(todo.id)">Reject</button>
+                     <button type="button" class="btn btn-danger" ng-click="rejectSubmission(submission.id)">Reject</button>
                    </div>
                </div>
             </div>
