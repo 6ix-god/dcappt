@@ -80,11 +80,8 @@ userSchema.pre('save', function(callback) {
   });
 });
 
-userSchema.methods.verifyPassword = function(password, cb) {
-  bcrypt.compare(password, this.password, function(err, isMatch) {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
+userSchema.methods.verifyPassword = function(password) {
+	return bcrypt.compareSync(password, this.password);
 };
 
 userSchema.options.toJSON.transform = function (doc, ret) {
@@ -300,13 +297,15 @@ router.post('/login', function(req, res, next) {
 
   User.findOne({ email: req.body.email }, function (err, user) {
 
-    if (err) {
-        res.json({"message": "There is no User in our database with the requested ID"});
-    }
-
-    if (!user) {
-      res.json({"message": "User does not exist"});
-    }
+      if(err) {
+				res.send(401);
+			}
+			if(!user) {
+				res.send(401);
+			}
+			if(!user.verifyPassword(req.body.password)) {
+				res.send(401);
+			}
 
     user.verifyPassword(req.body.password, function(err, isMatch) {
 
