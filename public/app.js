@@ -41,6 +41,10 @@ angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate'
         templateUrl: 'views/admin.html',
         controller: 'AdminCtrl'
       })
+      .when('/panel/clinic', {
+        templateUrl: 'views/clinicPanel.html',
+        controller: 'PanelCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

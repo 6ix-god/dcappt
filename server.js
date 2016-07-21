@@ -53,6 +53,7 @@ var userSchema = new mongoose.Schema({
   street: String,
   city: String,
   state: String,
+  specialties: [],
   country: String,
   isDoctor: Boolean,
   isAdmin: Boolean,
