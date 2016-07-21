@@ -298,10 +298,10 @@ router.post('/login', function(req, res, next) {
   User.findOne({ email: req.body.email }, function (err, user) {
 
       if(err) {
-				res.send(401);
+				res.status(500).send('Something broke!');
 			}
 			if(!user) {
-				res.send(401);
+				res.status(500).send('User does not exist');
 			}
 			if(!user.verifyPassword(req.body.password)) {
 				res.send(401);
