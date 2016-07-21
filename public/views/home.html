@@ -6,11 +6,15 @@
       </div>
    </div>
 </div>
-<div class="jumbotron main masthead">
+<div class="jumbotron main masthead" style="text-shadow: none;">
    <div class="container">
       <h1>docAPPT</h1>
       <p>A new way for the paitent to save time<br> with a large variaty of options anytime and anywhere.</p>
-      <a class="btn btn-primary btn-lg" href="/">Get Started</a>
+
+      <div id="suggestion" style="text-align: center;">
+        <input id="location-1" type="text" class="form-control typeahead" placeholder="Search Clinics via Name, Zip Code, Address, etc" data-provide="typeahead" autocomplete="off">
+      </div>
+
    </div>
 </div>
 <div class="bs-docs-social">
@@ -57,3 +61,52 @@
   </div>
 </div>
 </div>
+
+<script>
+  function sug(response){
+    console.log(response);
+  };
+
+  (function(document, jQuery){
+
+    var source = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      identify: function(obj) { console.log(obj); return obj.name; },
+      remote: {
+        url: '/api/v1/autocomplete/clinic?query=%QUERY',
+        wildcard: '%QUERY'
+      }
+    });
+
+    console.log(source);
+
+    jQuery(document).ready(function(){
+
+      jQuery('#suggestion .typeahead').typeahead({
+        hint: true,
+        highlight: true,
+        minLength: 2
+      }, {
+        name: 'muse-suggesions',
+        display: 'value',
+        source: source,
+        limit: 15,
+        templates: {
+          empty: [].join('\n'),
+          suggestion: Handlebars.compile('<div>{{name}}</div>')
+        }
+      });
+
+      jQuery('#suggestion .typeahead').bind('typeahead:select', function(ev, suggestion) {
+        console.log('Selection Object: ', suggestion);
+        console.log('Email: ', suggestion.email);
+        console.log('Id: ', suggestion.id);
+        window.location = "#/clinic/" + suggestion._id;
+      });
+    });
+
+
+  }(document, jQuery));
+
+</script>

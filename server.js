@@ -56,7 +56,7 @@ var userSchema = new mongoose.Schema({
   isDoctor: Boolean,
   isAdmin: Boolean,
   isStaff: Boolean,
-  appointments: [mongoose.Schema.Types.ObjectId]
+  appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }]
 },
 {
   toObject: { virtuals: true },
@@ -94,22 +94,22 @@ userSchema.options.toJSON.transform = function (doc, ret) {
 var Schema = mongoose.Schema;
 
 var appointmentSchema = new mongoose.Schema({
-  doctor: mongoose.Schema.Types.ObjectId,
-  clinic: mongoose.Schema.Types.ObjectId,
-  paitent: mongoose.Schema.Types.ObjectId,
+  doctor: { type: Schema.Types.ObjectId, ref: 'User' },
+  clinic: { type: Schema.Types.ObjectId, ref: 'Clinic' },
+  paitent: { type: Schema.Types.ObjectId, ref: 'User' },
   specialtySetForAppointment: String,
   approved: Boolean,
   dateAndTime: Date,
-  approvedBy: mongoose.Schema.Types.ObjectId,
+  approvedBy: { type: Schema.Types.ObjectId, ref: 'User' },
   approvedOn: Date,
   doctorsNote: String
 });
 
 var clinicSchema = new mongoose.Schema({
-  appointments: [mongoose.Schema.Types.ObjectId],
+  appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }],
   name: String,
-  paitents: [mongoose.Schema.Types.ObjectId],
-  doctors: [mongoose.Schema.Types.ObjectId],
+  paitents: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  doctors: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   description: String,
   phoneNumber: Number,
   zipCode: Number,
@@ -348,15 +348,16 @@ app.post('/user/request/appointment', isAuthenticated, function(req, res) {
 
 });
 
-app.get('/clinic/:id', function(req, res) {
-  // return information about a clinic from clinicSchema
-  Clinic.findOne({ _id: req.params.id }, function(err, clinic) {
-    if (clinic) {
-      clinic = clinic.toObject();
-      res.end(JSON.stringify(clinic));
-    } else {
-      return res.status(400).end('Clinic Not Found');
-    }
+router.get('/clinic/:id', function(req, res) {
+  Clinic
+  .findById(req.params.id)
+  .populate('doctors')
+  .exec(function (err, clinic) {
+      if (clinic) {
+        res.json(clinic);
+      } else {
+        return res.status(400).end('Clinic Not Found');
+      }
   });
 });
 
@@ -380,11 +381,6 @@ app.get('/user/profile', isAuthenticated, function(req, res) {
     res.end(JSON.stringify(user));
   });
 });
-
-app.put('/user/:id', function(req, res) {
-  // updates users  information TODO
-});
-
 
 app.post('/panel/approve/:id', isAuthenticated, function(req, res) {
   // approve appointments as a doctor
@@ -445,6 +441,9 @@ app.post('/panel/doctor/leave/:id', isAuthenticated, function(req, res, next) {
 
 router.get('/admin/submissions', isAuthenticated, function(req, res) {
   // returns all pending doctors submissions to dev/admins
+
+    if (req.user.isAdmin == false) return res.status(400).send({message: 'Why are you here lol?'});
+
     Submission
     .find({})
     .populate('applicant')
@@ -457,6 +456,8 @@ router.get('/admin/submissions', isAuthenticated, function(req, res) {
 
 router.put('/admin/approve/:id', isAuthenticated, function(req, res) {
   // approves doctor based off their user id
+
+  if (req.user.isAdmin == false) return res.status(400).send({message: 'Why are you here lol?'});
 
     Submission
     .findById(req.params.id)
@@ -491,13 +492,13 @@ router.put('/admin/approve/:id', isAuthenticated, function(req, res) {
 
     // TODO: Send Email
     var newClinicMailOptions = {
-        from: 'docAPPT Suuport <skinreserve@gmail.com>',
+        from: 'docAPPT Support <skinreserve@gmail.com>',
         to: submission.applicant.email,
         subject: 'Congratulations your clinic has been added!',
         template: 'newClinic',
         context: {
-          email: req.user.email,
-          firstName: req.user.firstName
+          email: submission.applicant.email,
+          firstName: submission.applicant.firstName
         }
       };
 
@@ -510,6 +511,11 @@ router.put('/admin/approve/:id', isAuthenticated, function(req, res) {
         transporter.close();
       });
 
+      User.findById(submission.applicant.id, function(err, user) {
+        user.isDoctor = true;
+        user.save();
+      });
+
       submission.remove(function(err, oldSubmission) {
         if (err) return console.error(err);
       });
@@ -519,6 +525,9 @@ router.put('/admin/approve/:id', isAuthenticated, function(req, res) {
 
 router.delete('/admin/decline/:id', isAuthenticated, function(req, res) {
   // approves doctor based off their user id
+
+  if (req.user.isAdmin == false) return res.status(400).send({message: 'Why are you here lol?'});
+
   Submission
   .findById(req.params.id)
   .populate('applicant')
@@ -571,7 +580,7 @@ app.get('/autocomplete/email', function(req, res) {
   });
 });
 
-app.get('/autocomplete/clinic', function(req, res) {
+router.get('/autocomplete/clinic', function(req, res) {
   var name = req.param('query');
   var regex = new RegExp(name, 'i');
   var query = Clinic.find({name: regex}).limit(20).select('name').select('city').select('state');

@@ -65,8 +65,8 @@
                         </li>
                         <li>
                         </li>
-                        <form class="player-search">
-                           <input class="input-sm form-control" id="player-search" name="search" placeholder="Search for a clinic" type="text">
+                        <form id="clinic-search">
+                           <input class="input-sm form-control" name="search" placeholder="Search for a clinic" type="text">
                         </form>
                      </ul>
                   </li>
@@ -194,7 +194,7 @@
                   <li>
                      <a class="inquiry" data-toggle="modal" href="#contact">Bug Reports</a>
                   </li>
-                  <li>
+                  <li data-match-route="#/register/doctor">
                      <a class="inquiry" data-toggle="modal" href="#/register/doctor">Register as a Doctor</a>
                   </li>
                </ul>
@@ -251,11 +251,60 @@
       <script src="controllers/signup.js"></script>
       <script src="controllers/doctorRegister.js"></script>
       <script src="controllers/admin.js"></script>
-
+      <script src="controllers/clinic.js"></script>
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.core.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+
+      <script>
+        function sug(response){
+          console.log(response);
+        };
+
+        (function(document, jQuery){
+
+          var source = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            identify: function(obj) { console.log(obj); return obj.email; },
+            remote: {
+              url: '/autocomplete/email?query=%QUERY',
+              wildcard: '%QUERY'
+            }
+          });
+
+          console.log(source);
+
+          jQuery(document).ready(function(){
+
+            jQuery('#suggestion .typeahead').typeahead({
+              hint: true,
+              highlight: true,
+              minLength: 2
+            }, {
+              name: 'muse-suggesions',
+              display: 'value',
+              source: source,
+              limit: 15,
+              templates: {
+                empty: [].join('\n'),
+                suggestion: Handlebars.compile('<div>{{email}}</div>')
+              }
+            });
+
+            jQuery('#suggestion .typeahead').bind('typeahead:select', function(ev, suggestion) {
+              console.log('Selection Object: ', suggestion);
+              console.log('Email: ', suggestion.email);
+              console.log('Id: ', suggestion.id);
+              // window.location = "/user/" + this.id; - go to link with uder id
+            });
+          });
+
+
+        }(document, jQuery));
+
+      </script>
 
    </body>
 

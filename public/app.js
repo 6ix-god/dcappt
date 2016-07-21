@@ -9,6 +9,10 @@ angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate'
         templateUrl: 'views/home.html',
         controller: 'MainCtrl'
       })
+      .when('/clinic/:id', {
+        templateUrl: 'views/clinic.html',
+        controller: 'ClinicCtrl'
+      })
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'

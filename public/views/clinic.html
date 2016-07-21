@@ -1,0 +1,247 @@
+<br>
+<div class="container">
+   <section>
+      <div class="row">
+         <div class="col-md-8">
+            <h1 style="margin-top: 0;">
+               {{clinic.name}}
+               <small>{{clinic.city}}, {{clinic.state}}</small>
+            </h1>
+            </b>
+            <dl class="dl-horizontal">
+               <dt>Doctor(s)</dt>
+               <dd>
+                  <div ng-repeat="doctor in doctors">
+                   {{doctor.firstName}} {{doctor.lastName}}
+                  </div>
+               </dd>
+               <dt>Description</dt>
+               <dd>
+                  <strong>{{clinic.description}}</strong>
+               </dd>
+               <dt>Contact</dt>
+               <dd>
+                  <strong> <i class="fa fa-phone"></i> {{clinic.phoneNumber}}</strong>
+               </dd>
+               <dt>Address</dt>
+               <dd>
+                  <strong> <i class="fa fa-house"></i>
+                    {{clinic.street}}<br>
+                    {{clinic.city}}, {{clinic.state}} {{clinic.zipCode}}<br>
+                    {{clinic.country}}
+                  </strong>
+               </dd>
+            </dl>
+         </div>
+         <div class="col-md-4">
+            <img class="thumbnail center-block img-responsive" src="http://photos2.zillowstatic.com/p_h/ISt82czh0i1eur1000000000.jpg">
+            <button type="button" class="btn btn-success" style="width: 100%"><i class="fa fa-bookmark" aria-hidden="true"></i>&nbsp;&nbsp;Book Appointment</button>
+            <br><br>
+            <button type="button" class="btn btn-warning" style="width: 100%"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;&nbsp;Rate</button>
+         </div>
+      </div>
+      <br>
+      <div class="row">
+         <div class="col-md-12">
+            <ul class="nav nav-tabs">
+               <li class="active">
+                  <a data-toggle="tab" href="##aboutClinic" >About</a>
+               </li>
+               <li>
+                  <a data-toggle="tab" href="##available-times">Available Times</a>
+               </li>
+               <li>
+                  <a data-toggle="tab" href="##photos">Photos</a>
+               </li>
+               <li>
+                  <a data-toggle="tab" href="##location">Location</a>
+               </li>
+            </ul>
+         </div>
+      </div>
+      <div class="row tab-content">
+         <div class="tab-pane active" id="aboutClinic">
+            <div class="col-md-4 rating">
+               <div class="stars" style="height: 46px; width: 235px">
+                  <div class="stars-inner">
+                     <div class="stars-bg fa fa-star" style="font-size: 46px; margin: 2px"></div>
+                     <div class="stars-bg fa fa-star" style="font-size: 46px; margin: 2px"></div>
+                     <div class="stars-bg fa fa-star" style="font-size: 46px; margin: 2px"></div>
+                     <div class="stars-bg fa fa-star" style="font-size: 46px; margin: 2px"></div>
+                     <div class="stars-bg fa fa-star" style="font-size: 46px; margin: 2px"></div>
+                  </div>
+                  <div class="stars-inner" style="left: 3px; top: 3px;">
+                     <nobr>
+                        <div class="stars-fg fa fa-star" style="font-size: 46px; margin: 2px;"></div>
+                        <div class="stars-fg fa fa-star" style="font-size: 46px; margin: 2px;"></div>
+                        <div class="stars-fg fa fa-star" style="font-size: 46px; margin: 2px;"></div>
+                        <div class="stars-fg fa fa-star" style="font-size: 46px; margin: 2px; width: 38.68842105263158px"></div>
+                     </nobr>
+                  </div>
+               </div>
+               <h1>
+                  3.89
+                  <small>Average Rating</small>
+               </h1>
+            </div>
+            <div class="col-md-8">
+               <div class="table-container">
+                  <table class="table table-bordered">
+                     <thead>
+                        <tr>
+                           <th colspan="2" style="text-align: center;">
+                              1083
+                              Votes
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr style="height: 24px;">
+                           <td>
+                              <b style="margin: 10px;">1</b>
+                           </td>
+                           <td style="width: 100%">
+                              <div style="text-align: right; padding-right: 6px; background-color: #e66; height: 20px; width: 19.12948207171315%;">
+                                 97
+                              </div>
+                           </td>
+                        </tr>
+                        <tr style="height: 24px;">
+                           <td>
+                              <b style="margin: 10px;">2</b>
+                           </td>
+                           <td style="width: 100%">
+                              <div style="text-align: right; padding-right: 6px; background-color: #f92; height: 20px; width: 13.213147410358566%;">
+                                 67
+                              </div>
+                           </td>
+                        </tr>
+                        <tr style="height: 24px;">
+                           <td>
+                              <b style="margin: 10px;">3</b>
+                           </td>
+                           <td style="width: 100%">
+                              <div style="text-align: right; padding-right: 6px; background-color: #fd2; height: 20px; width: 37.667330677290835%;">
+                                 191
+                              </div>
+                           </td>
+                        </tr>
+                        <tr style="height: 24px;">
+                           <td>
+                              <b style="margin: 10px;">4</b>
+                           </td>
+                           <td style="width: 100%">
+                              <div style="text-align: right; padding-right: 6px; background-color: #ad2; height: 20px; width: 44.569721115537845%;">
+                                 226
+                              </div>
+                           </td>
+                        </tr>
+                        <tr style="height: 24px;">
+                           <td>
+                              <b style="margin: 10px;">5</b>
+                           </td>
+                           <td style="width: 100%">
+                              <div style="text-align: right; padding-right: 6px; background-color: #0d2; height: 20px; width: 99.0%;">
+                                 502
+                              </div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+         <div class="tab-pane true" id="available-times">
+            <div class="col-md-4 rating">
+               <div class="stars" style="height: 46px; width: 235px">
+                  <div class="stars-inner">
+                     <div class="stars-bg fa fa-star" style="font-size: 46px; margin: 2px"></div>
+                     <div class="stars-bg fa fa-star" style="font-size: 46px; margin: 2px"></div>
+                     <div class="stars-bg fa fa-star" style="font-size: 46px; margin: 2px"></div>
+                     <div class="stars-bg fa fa-star" style="font-size: 46px; margin: 2px"></div>
+                     <div class="stars-bg fa fa-star" style="font-size: 46px; margin: 2px"></div>
+                  </div>
+                  <div class="stars-inner" style="left: 3px; top: 3px;">
+                     <nobr>
+                        <div class="stars-fg fa fa-star" style="font-size: 46px; margin: 2px;"></div>
+                        <div class="stars-fg fa fa-star" style="font-size: 46px; margin: 2px;"></div>
+                        <div class="stars-fg fa fa-star" style="font-size: 46px; margin: 2px;"></div>
+                        <div class="stars-fg fa fa-star" style="font-size: 46px; margin: 2px; width: 38.68842105263158px"></div>
+                     </nobr>
+                  </div>
+               </div>
+               <h1>
+                  3.89
+                  <small>Average Rating</small>
+               </h1>
+            </div>
+            <div class="col-md-8">
+               <div class="table-container">
+                  <table class="table table-bordered">
+                     <thead>
+                        <tr>
+                           <th colspan="2" style="text-align: center;">
+                              1083
+                              Votes
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr style="height: 24px;">
+                           <td>
+                              <b style="margin: 10px;">1</b>
+                           </td>
+                           <td style="width: 100%">
+                              <div style="text-align: right; padding-right: 6px; background-color: #e66; height: 20px; width: 19.12948207171315%;">
+                                 97
+                              </div>
+                           </td>
+                        </tr>
+                        <tr style="height: 24px;">
+                           <td>
+                              <b style="margin: 10px;">2</b>
+                           </td>
+                           <td style="width: 100%">
+                              <div style="text-align: right; padding-right: 6px; background-color: #f92; height: 20px; width: 13.213147410358566%;">
+                                 67
+                              </div>
+                           </td>
+                        </tr>
+                        <tr style="height: 24px;">
+                           <td>
+                              <b style="margin: 10px;">3</b>
+                           </td>
+                           <td style="width: 100%">
+                              <div style="text-align: right; padding-right: 6px; background-color: #fd2; height: 20px; width: 37.667330677290835%;">
+                                 191
+                              </div>
+                           </td>
+                        </tr>
+                        <tr style="height: 24px;">
+                           <td>
+                              <b style="margin: 10px;">4</b>
+                           </td>
+                           <td style="width: 100%">
+                              <div style="text-align: right; padding-right: 6px; background-color: #ad2; height: 20px; width: 44.569721115537845%;">
+                                 226
+                              </div>
+                           </td>
+                        </tr>
+                        <tr style="height: 24px;">
+                           <td>
+                              <b style="margin: 10px;">5</b>
+                           </td>
+                           <td style="width: 100%">
+                              <div style="text-align: right; padding-right: 6px; background-color: #0d2; height: 20px; width: 99.0%;">
+                                 502
+                              </div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</div>

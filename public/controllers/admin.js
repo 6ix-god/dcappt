@@ -5,16 +5,16 @@ angular.module('docAPPTapp')
       method: 'GET',
       url: '/api/v1/admin/submissions'
     }).then(function successCallback(response) {
-      // returns array of data to scope
       $scope.submissions = response.data;
       console.log(response.data);
     }, function errorCallback(response) {
       $alert({
-          content: 'Error Occured.',
+          content: response.data.message,
           animation: 'fadeZoom',
           type: 'material',
           duration: 3
         });
+        $location.path('/');
     });
 
     $scope.acceptSubmission = function(id) {
