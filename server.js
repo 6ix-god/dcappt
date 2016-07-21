@@ -27,6 +27,7 @@ app.use(logger('dev'));
 app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var Schema = mongoose.Schema;
 var isAuthenticated = passport.authenticate('bearer', { session : false });
 
 mongoose.connect(config.mongoURI, function(err) {
@@ -91,7 +92,6 @@ userSchema.options.toJSON.transform = function (doc, ret) {
     delete ret.password;
 };
 
-var Schema = mongoose.Schema;
 
 var appointmentSchema = new mongoose.Schema({
   doctor: { type: Schema.Types.ObjectId, ref: 'User' },
