@@ -308,7 +308,7 @@ router.post('/login', function(req, res, next) {
       res.json({"message": "User does not exist"});
     }
 
-  user.verifyPassword(req.body.password, function(err, isMatch) {
+    user.verifyPassword(req.body.password, function(err, isMatch) {
 
       if (err) {
           res.json({"message": "There is no User in our database with the requested ID"});
