@@ -321,7 +321,7 @@ router.post('/login', function(req, res, next) {
         var newLoginToken = randtoken.generate(16);
         user.token = newLoginToken;
         user.save();
-        res.end({ "token": user.token });
+        res.json({ toekn: user.token });
 
       }
 
