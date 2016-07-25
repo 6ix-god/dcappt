@@ -144,7 +144,7 @@ submissionSchema.options.toJSON.transform = function (doc, ret) {
     delete ret.__v;
 };
 
-var scheduleSchema = new mongoose.schema({
+var scheduleSchema = new mongoose.Schema({
   title: String, // Example: "Appointment with Peter Soboyejo"
   type: String, // info (default)
   startsAt: Date, // iso 8601
