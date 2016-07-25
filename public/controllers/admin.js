@@ -9,7 +9,7 @@ angular.module('docAPPTapp')
       console.log(response.data);
     }, function errorCallback(response) {
       $alert({
-          content: response.data.message,
+          content: response.data,
           animation: 'fadeZoom',
           type: 'material',
           duration: 3

@@ -1,4 +1,4 @@
-angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate', 'mgcrea.ngStrap'])
+angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap', 'mwl.calendar', 'ui.bootstrap'])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
 
     $locationProvider.html5Mode(false);
@@ -45,6 +45,10 @@ angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate'
         templateUrl: 'views/clinicPanel.html',
         controller: 'PanelCtrl'
       })
+      .when('/panel/calendar', {
+        templateUrl: 'views/calander.html',
+        controller: 'CalendarCtrl as vm'
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -67,4 +71,5 @@ angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ngRoute', 'ngAnimate'
         }
       }
     });
+
   });

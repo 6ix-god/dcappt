@@ -1,6 +1,6 @@
-// hi
 var nodemailer = require('nodemailer'),
     nodemailerHandlebars = require('nodemailer-express-handlebars');
+var config = require('./config');
 
 var mailerOptions = {
      viewEngine: {
@@ -17,8 +17,8 @@ var mailerOptions = {
 var transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: 'skinreserve',
-    pass: 'K6Tv9ktvUXNu7TxbZcFUC8F5'
+    user: config.email,
+    pass: config.emailPswd
   }
 });
 

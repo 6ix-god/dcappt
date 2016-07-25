@@ -2,6 +2,7 @@ angular.module('docAPPTapp')
   .controller('LoginCtrl', function($scope, UserFactory, $rootScope, $window, AuthTokenFactory) {
 
     var token = $window.localStorage.token;
+
     if (token) {
       $rootScope.currentUser = true;
     }
@@ -12,6 +13,7 @@ angular.module('docAPPTapp')
 
     $scope.login = function() {
       UserFactory.login($scope.email, $scope.password).then(function success(response) {
+        console.log(response);
         $window.localStorage.setItem('token', response.data.token); // store token in local storage
       }, handleError);
     }

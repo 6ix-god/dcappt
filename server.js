@@ -144,10 +144,30 @@ submissionSchema.options.toJSON.transform = function (doc, ret) {
     delete ret.__v;
 };
 
+var scheduleSchema = new mongoose.schema({
+  title: String, // Example: "Appointment with Peter Soboyejo"
+  type: String, // info (default)
+  startsAt: Date, // iso 8601
+  draggable: Boolean, // false
+  resizable: Boolean, // false
+  clinic: { type: Schema.Types.ObjectId, ref: 'Clinic' },
+  paitent: { type: Schema.Types.ObjectId, ref: 'User' }
+},
+{
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true }
+});
+
+scheduleSchema.options.toJSON.transform = function (doc, ret) {
+    delete ret._id;
+    delete ret.__v;
+};
+
 var User = mongoose.model('User', userSchema);
 var Appointment = mongoose.model('Appointment', appointmentSchema);
 var Clinic =  mongoose.model('Clinic', clinicSchema);
 var Submission =  mongoose.model('Submission', submissionSchema);
+var Schedule = mongoose.model('Schedule', scheduleSchema);
 
 // Token Based Authentication Because why not.
 passport.use(new BearerStrategy(
@@ -304,10 +324,6 @@ router.post('/login', function(req, res, next) {
         res.json({"message": "There is no User in our database with the requested ID"});
     }
 
-    if (!user) {
-      res.json({"message": "User does not exist"});
-    }
-
   user.verifyPassword(req.body.password, function(err, isMatch) {
 
       if (err) {
@@ -321,7 +337,7 @@ router.post('/login', function(req, res, next) {
         var newLoginToken = randtoken.generate(16);
         user.token = newLoginToken;
         user.save();
-        res.json({ toekn: user.token });
+        res.json({ token: user.token });
 
       }
 
@@ -445,6 +461,7 @@ app.post('/panel/doctor/leave/:id', isAuthenticated, function(req, res, next) {
 router.get('/admin/submissions', isAuthenticated, function(req, res) {
   // returns all pending doctors submissions to dev/admins
 
+    console.log("isAdmin value for " + req.user.email + " is " + req.user.isAdmin);
     if (req.user.isAdmin == false) return res.status(400).send({message: 'Why are you here lol?'});
 
     Submission
