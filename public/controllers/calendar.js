@@ -1,5 +1,5 @@
 angular.module('docAPPTapp')
-  .controller('CalendarCtrl', ["$scope", "moment", function($scope, moment) {
+  .controller('CalendarCtrl', ["$scope", "moment", "alert", function($scope, moment, alert) {
 
     var vm = this;
 
@@ -24,6 +24,22 @@ angular.module('docAPPTapp')
     ];
 
     vm.isCellOpen = true;
+
+    vm.eventClicked = function(event) {
+      alert.show('Clicked', event);
+    };
+
+    vm.eventEdited = function(event) {
+      alert.show('Edited', event);
+    };
+
+    vm.eventDeleted = function(event) {
+      alert.show('Deleted', event);
+    };
+
+    vm.eventTimesChanged = function(event) {
+      alert.show('Dropped or resized', event);
+    };
 
     vm.toggle = function($event, field, event) {
       $event.preventDefault();

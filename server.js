@@ -117,7 +117,9 @@ var clinicSchema = new mongoose.Schema({
   street: String,
   city: String,
   state: String,
-  country: String
+  country: String,
+  availableTimes: [],
+  appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }]
 });
 
 var submissionSchema = new mongoose.Schema({
