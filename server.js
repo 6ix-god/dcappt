@@ -152,6 +152,7 @@ var scheduleSchema = new mongoose.Schema({
   startsAt: Date, // iso 8601
   draggable: Boolean, // false
   resizable: Boolean, // false
+  appointment: { type: Schema.Types.ObjectId, ref: 'Appointment' },
   clinic: { type: Schema.Types.ObjectId, ref: 'Clinic' },
   paitent: { type: Schema.Types.ObjectId, ref: 'User' }
 },
@@ -425,11 +426,27 @@ app.post('/panel/approve/:id', isAuthenticated, function(req, res) {
 });
 
 app.post('/panel/doctor/create', isAuthenticated, function(req, res) {
-  // create appointment as doctor to exsisting clinc
-  var userEmail = req.body.email;
-  var time = req.body.time;
-  var doctorsNote = req.body.doctorsNote;
-  var specialtySetForAppointment = req.body.specialtySetForAppointment;
+
+  // TODO: Create an Appointment as a doctor
+  // 1. Creates an Appointment to appointmentSchema
+  // 2. Adds paitent to paitents array in clinicSchema
+  // 3. Adds appointment ID to appointments array under clinicSchema
+  // 4. Add appointment ID to paitents appointments array in userSchema
+  // 5. Creates scheduleSchema adding the appointment id, clinic id, and paitent id.
+  // 6. Sends email to user that appointment has been created
+
+  var newAppointment = new Appointment(
+    { size: 'small' }
+    
+  );
+  newAppointment.save(function (err) {
+    if (err) return handleError(err);
+    console.log('Appointment Saved.');
+  })
+
+
+
+
 });
 
 app.post('/panel/doctor/add', isAuthenticated, function(req, res) {
