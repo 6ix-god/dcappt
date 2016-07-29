@@ -44,6 +44,9 @@ angular.module('docAPPTapp')
       $event.preventDefault();
       $event.stopPropagation();
       event[field] = !event[field];
+      console.log("$event " + $event);
+      console.log("field " + field);
+      console.log("event " + event);
     };
 
 

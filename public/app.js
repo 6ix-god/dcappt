@@ -49,6 +49,10 @@ angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngS
         templateUrl: 'views/calander.html',
         controller: 'CalendarCtrl as vm'
       })
+      .when('/panel/add/appointment', {
+        templateUrl: 'views/addAppointment.html',
+        controller: 'addAppointmentCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

@@ -91,6 +91,7 @@ userSchema.methods.verifyPassword = function(password, cb) {
 userSchema.options.toJSON.transform = function (doc, ret) {
     delete ret._id;
     delete ret.__v;
+    delete ret.token;
     delete ret.password;
 };
 
@@ -560,6 +561,7 @@ router.get('/admin/submissions', isAuthenticated, function(req, res) {
     .populate('applicant')
     .exec(function (err, submissions) {
       if (err) return handleError(err);
+      delete submissions.token;
       res.json(submissions);
     });
 
