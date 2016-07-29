@@ -48,7 +48,7 @@ var userSchema = new mongoose.Schema({
   phoneNumber: Number,
   firstName: String,
   lastName: String,
-  dateCreated: String,
+  dateCreated: { type: Date, default: moment().format() },
   zipCode: Number,
   street: String,
   city: String,
@@ -58,6 +58,7 @@ var userSchema = new mongoose.Schema({
   isDoctor: Boolean,
   isAdmin: Boolean,
   isStaff: Boolean,
+  workplace: { type: Schema.Types.ObjectId, ref: 'Clinic' },
   appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }]
 },
 {
@@ -104,7 +105,16 @@ var appointmentSchema = new mongoose.Schema({
   approvedBy: { type: Schema.Types.ObjectId, ref: 'User' },
   approvedOn: Date,
   doctorsNote: String
+},
+{
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true }
 });
+
+appointmentSchema.options.toJSON.transform = function (doc, ret) {
+    delete ret._id;
+    delete ret.__v;
+};
 
 var clinicSchema = new mongoose.Schema({
   appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }],
@@ -134,7 +144,7 @@ var submissionSchema = new mongoose.Schema({
   state: String,
   phoneNumber: Number,
   country: String,
-  dateCreated: Date
+  dateCreated: { type: Date, default: moment().format() }
 },
 {
   toObject: { virtuals: true },
@@ -150,8 +160,6 @@ var scheduleSchema = new mongoose.Schema({
   title: String, // Example: "Appointment with Peter Soboyejo"
   type: String, // info (default)
   startsAt: Date, // iso 8601
-  draggable: Boolean, // false
-  resizable: Boolean, // false
   appointment: { type: Schema.Types.ObjectId, ref: 'Appointment' },
   clinic: { type: Schema.Types.ObjectId, ref: 'Clinic' },
   paitent: { type: Schema.Types.ObjectId, ref: 'User' }
@@ -216,7 +224,8 @@ router.post('/register', function(req, res) {
       newUser.isAdmin = false;
       newUser.isDoctor = false;
       newUser.isStaff = false;
-      newUser.dateCreated = Date.now();
+      newUser.workplace = null;
+      newUser.dateCreated = moment().format();
       newUser.token = generatedToken;
 
       newUser.save(function(err) {
@@ -239,7 +248,6 @@ router.post('/register', function(req, res) {
         }
       };
 
-      function sendEmail() {
         // send mail with defined transport object
         transporter.sendMail(submissionMailOptions, function(error, info){
           if(error){
@@ -249,9 +257,6 @@ router.post('/register', function(req, res) {
           }
           transporter.close();
         });
-      }
-
-      sendEmail()
 
     }
   });
@@ -282,7 +287,8 @@ router.post('/register/doctor', isAuthenticated, function(req, res, next) {
 
       newSubmission.applicant = req.user.id;
       newSubmission.clinicName = req.body.clinicName;
-      newSubmission.dateCreated = Date.now();
+      newSubmission.dateCreated = moment().format(); // get current date in iso format
+
 
       newSubmission.save(function(err) {
         if (err) return next(err);
@@ -425,27 +431,93 @@ app.post('/panel/approve/:id', isAuthenticated, function(req, res) {
 
 });
 
-app.post('/panel/doctor/create', isAuthenticated, function(req, res) {
+router.post('/panel/create', isAuthenticated, function(req, res) {
 
-  // TODO: Create an Appointment as a doctor
-  // 1. Creates an Appointment to appointmentSchema
-  // 2. Adds paitent to paitents array in clinicSchema
-  // 3. Adds appointment ID to appointments array under clinicSchema
-  // 4. Add appointment ID to paitents appointments array in userSchema
-  // 5. Creates scheduleSchema adding the appointment id, clinic id, and paitent id.
-  // 6. Sends email to user that appointment has been created
+  // TODO: Create an Appointment as a doctor [x]
+  // 1. Creates an Appointment to appointmentSchema [x]
+  // 2. Adds paitent to paitents array in clinicSchema [x]
+  // 3. Adds appointment ID to appointments array under clinicSchema [x]
+  // 4. Add appointment ID to paitents appointments array in userSchema [x]
+  // 5. Creates scheduleSchema adding the appointment id, clinic id, and paitent id. [x]
+  // 6. Sends email to user that appointment has been created []
 
-  var newAppointment = new Appointment(
-    { size: 'small' }
-    
-  );
-  newAppointment.save(function (err) {
-    if (err) return handleError(err);
-    console.log('Appointment Saved.');
-  })
+  var fields = ['paitent', 'specialtySetForAppointment', 'dateAndTime', 'doctorsNote'], field;
 
+  for (var i = 0; i < fields.length; i++) {
+    field = fields[i];
+    if (!req.body[field]) {
+      return res.status(400).end('Invalid Input');
+    }
+  }
 
+  User.findById(req.user.id, function(err, user) {
 
+      var newAppointmentID;
+
+      if (user.isDoctor === false || user.isStaff === false) res.status(400).end({message: 'You do not have permissions to do this.'});
+
+      var newAppointment = new Appointment();
+      for (var i = 0; i < fields.length; i++) {
+        field = fields[i];
+        newAppointment[field] = req.body[field];
+      }
+
+      newAppointment.doctor = req.user.id;
+      newAppointment.clinic = req.user.workplace;
+      newAppointment.approved = false;
+      newAppointment.dateAndTime = req.user.dateAndTime;
+      newAppointment.approvedBy = req.user.id;
+      newAppointment.approvedOn = moment().format();
+
+      newAppointment.save(function (err, newAppointment) {
+        if (err) return handleError(err);
+        console.log('Appointment Saved.');
+        console.log('Appointment ID: ' + newAppointment.id);
+        newAppointmentID = newAppointment.id;
+      });
+
+      Clinic.findById(req.user.workplace, function(err, clinic) {
+        if (err) return next(err);
+        clinic.appointments.push(newAppointmentID);
+        clinic.paitents.push(req.body.paitent);
+        clinic.save(function(err) {
+          if (err) return next(err);
+          console.log('User added to paitents array in clinic');
+        });
+      });
+
+      User.findById(req.body.paitent, function(err, paitent) {
+        if (err) return next(err);
+        paitent.appointments.push(newAppointmentID);
+        paitent.save(function(err) {
+          if (err) return next(err);
+          console.log('Appointment added to user schema');
+        });
+      });
+
+      var newSchedule = new Schedule();
+      newSchedule.title = "Appointment with " + "";
+      newSchedule.type = 'info';
+      newSchedule.startsAt = req.body.dateAndTime;
+      newSchedule.appointment = newAppointmentID;
+      newSchedule.clinic = req.user.workplace;
+      newSchedule.paitent = req.body.paitent;
+      newSchedule.save(function(err) {
+        if (err) return next(err);
+        console.log('Schedule saved');
+      });
+
+      // schedule agenda
+      var alertDate; // TODO: Alert Date is scheduled one day before the appointment date
+      alertDate = momment(req.body.dateAndTime);
+      alertDate.add('days', -1).valueOf(); // one day before
+      agenda.schedule(alertDate.toDate(), 'send email alert', newAppointmentID);
+
+  });
+
+  // TODO: Send Email to Paitent when everything is done
+  console.log('Appointment Created');
+  res.status(200).end({message: 'Appointment succsefully created!'});
 
 });
 
@@ -481,7 +553,7 @@ router.get('/admin/submissions', isAuthenticated, function(req, res) {
   // returns all pending doctors submissions to dev/admins
 
     console.log("isAdmin value for " + req.user.email + " is " + req.user.isAdmin);
-    if (req.user.isAdmin == false) return res.status(400).send({message: 'Why are you here lol?'});
+    if (req.user.isAdmin === false) return res.status(400).send({message: 'Why are you here lol?'});
 
     Submission
     .find({})
@@ -496,7 +568,7 @@ router.get('/admin/submissions', isAuthenticated, function(req, res) {
 router.put('/admin/approve/:id', isAuthenticated, function(req, res) {
   // approves doctor based off their user id
 
-  if (req.user.isAdmin == false) return res.status(400).send({message: 'Why are you here lol?'});
+  if (req.user.isAdmin === false) return res.status(400).send({message: 'Why are you here lol?'});
 
     Submission
     .findById(req.params.id)
@@ -565,7 +637,7 @@ router.put('/admin/approve/:id', isAuthenticated, function(req, res) {
 router.delete('/admin/decline/:id', isAuthenticated, function(req, res) {
   // approves doctor based off their user id
 
-  if (req.user.isAdmin == false) return res.status(400).send({message: 'Why are you here lol?'});
+  if (req.user.isAdmin === false) return res.status(400).send({message: 'Why are you here lol?'});
 
   Submission
   .findById(req.params.id)
@@ -640,5 +712,20 @@ router.get('/user/current', isAuthenticated, function(req, res) {
 });
 
 app.listen(server_port, server_ip_address, function () {
-     console.log("Server is Running on port " + server_port + " and located on " + server_ip_address);
+    console.log("Server is Running on port " + server_port + " and located on " + server_ip_address);
+});
+
+agenda.define('send email alert', function(job, done) {
+
+  var dataShit = job.attrs.data;
+  console.log(dataShit);
+
+});
+
+agenda.on('start', function(job) {
+  console.log("Job %s starting", job.attrs.name);
+});
+
+agenda.on('complete', function(job) {
+  console.log("Job %s finished", job.attrs.name);
 });

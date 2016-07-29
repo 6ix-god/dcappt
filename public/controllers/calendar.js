@@ -10,16 +10,15 @@ angular.module('docAPPTapp')
       {
         title: 'Event 1',
         type: 'info',
-        startsAt: moment().startOf('week').subtract(2, 'days').add(8, 'hours').toDate(),
+        startsAt: moment().format()
       }, {
         title: 'Event 2',
         type: 'info',
-        startsAt: moment().subtract(1, 'day').toDate(),
+        startsAt: moment().subtract(1, 'day').toDate()
       }, {
         title: 'Event 3',
         type: 'info',
-        startsAt: moment().startOf('day').add(7, 'hours').toDate(),
-        recursOn: 'year',
+        startsAt: moment().startOf('day').add(7, 'hours').toDate()
       }
     ];
 
