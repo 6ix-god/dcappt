@@ -14,7 +14,7 @@
       <style type="text/css">.cf-hidden { display: none; } .cf-invisible { visibility: hidden; }</style>
    </head>
    <body style="display: block;">
-      <nav class="navbar navbar-default navbar-static-top" style="background-color: #64B5F6; border-color: #64B5F6;">
+      <nav class="navbar navbar-default navbar-fixed-top" id="navbar" style="background-color: #64B5F6; border-color: #64B5F6;">
          <div class="container">
             <div class="navbar-header">
                <button class="navbar-toggle collapsed" data-target="#top-navbar-collapse" data-toggle="collapse">
@@ -139,11 +139,11 @@
          </div>
       </nav>
 
-
       <div ng-view class="{{pageClass}}"></div>
 
 
     <div class="container">
+
     <hr>
       <footer>
          <div class="row">
@@ -225,7 +225,7 @@
                </ul>
             </div>
             <div class="clearfix visible-xs-block" style="padding-bottom: 20px;"></div>
-            <div class="col-md-2 col-sm-4" style="text-align: center;">
+            <div id="startchange" class="col-md-2 col-sm-4" style="text-align: center;">
                Servers provided by
                <a href="/host">
                <img class="img-responsive" width="85%" src="https://upload.wikimedia.org/wikipedia/commons/7/79/DigitalOcean_logo.png">
@@ -272,6 +272,24 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.core.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+
+      <script>
+
+      $('#navbar').css('background-color', 'transparent');
+      $('#navbar').css('border-color', 'transparent');
+
+       $(window).scroll(function() {
+         if($(this).scrollTop() > 120)  /*height in pixels when the navbar becomes non opaque*/
+         {
+           $('#navbar').css('background-color', '#64B5F6');
+           $('#navbar').css('border-color', '#64B5F6');
+         } else {
+           $('#navbar').css('background-color', 'transparent');
+           $('#navbar').css('border-color', 'transparent');
+         }
+       });
+
+      </script>
 
       <script>
         function sug(response){
