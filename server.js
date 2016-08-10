@@ -17,7 +17,7 @@ var agenda = require('agenda')({ db: { address: config.mongoURI } });
 var transporter = require('./email');
 
 var server_port = 8080;
-var server_ip_address = '127.0.0.1'; // 127.0.0.1 as localhost
+var server_ip_address = '127.0.0.1';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -123,8 +123,8 @@ var clinicSchema = new mongoose.Schema({
   paitents: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   doctors: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   description: String,
-  phoneNumber: Number,
-  zipCode: Number,
+  phoneNumber: String,
+  zipCode: String,
   street: String,
   city: String,
   state: String,
@@ -345,8 +345,8 @@ router.post('/login', function(req, res, next) {
       } else {
 
         var newLoginToken = randtoken.generate(16);
-        user.token = newLoginToken;
-        user.save();
+        //user.token = newLoginToken;
+        //user.save();
         res.json({ token: user.token });
 
       }
@@ -388,6 +388,24 @@ router.get('/clinic/:id', function(req, res) {
         return res.status(400).end('Clinic Not Found');
       }
   });
+});
+
+// search for available Times
+router.get('/clinic/times/:id', function(req, res) {
+
+  var timeInput = req.params.id;
+
+    Clinic
+    .findById(req.params.id)
+    .populate('doctors')
+    .exec(function (err, clinic) {
+        if (clinic) {
+          res.json(clinic);
+        } else {
+          return res.status(400).end('Clinic Not Found');
+        }
+    });
+
 });
 
 app.get('/doctor/:id', function(req, res) {
@@ -712,6 +730,8 @@ router.get('/user/current', isAuthenticated, function(req, res) {
     res.json(user);
   });
 });
+
+
 
 app.listen(server_port, server_ip_address, function () {
     console.log("Server is Running on port " + server_port + " and located on " + server_ip_address);
