@@ -110,3 +110,21 @@
   }(document, jQuery));
 
 </script>
+
+<script>
+
+$('#navbar').css('background-color', 'transparent');
+$('#navbar').css('border-color', 'transparent');
+
+ $(window).scroll(function() {
+   if($(this).scrollTop() > 75)  /*height in pixels when the navbar becomes non opaque*/
+   {
+     $('#navbar').css('background-color', '#64B5F6');
+     $('#navbar').css('border-color', '#64B5F6');
+   } else {
+     $('#navbar').css('background-color', 'transparent');
+     $('#navbar').css('border-color', 'transparent');
+   }
+ });
+
+</script>

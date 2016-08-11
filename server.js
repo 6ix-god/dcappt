@@ -175,11 +175,22 @@ scheduleSchema.options.toJSON.transform = function (doc, ret) {
     delete ret.__v;
 };
 
+
+var LocationSchema = new mongoose.Schema({
+  name: String,
+  loc: {
+    type: [Number],
+    index: '2d'
+  }
+});
+
+
 var User = mongoose.model('User', userSchema);
 var Appointment = mongoose.model('Appointment', appointmentSchema);
 var Clinic =  mongoose.model('Clinic', clinicSchema);
 var Submission =  mongoose.model('Submission', submissionSchema);
 var Schedule = mongoose.model('Schedule', scheduleSchema);
+var Location = mongoose.model('Location', LocationSchema);
 
 // Token Based Authentication Because why not.
 passport.use(new BearerStrategy(
@@ -390,23 +401,19 @@ router.get('/clinic/:id', function(req, res) {
   });
 });
 
-// search for available Times
-router.get('/clinic/times/:id', function(req, res) {
 
-  var timeInput = req.params.id;
+/* TODO
+router.get('/clinic/times/:id/:date', function(req, res) {
 
-    Clinic
-    .findById(req.params.id)
-    .populate('doctors')
-    .exec(function (err, clinic) {
-        if (clinic) {
-          res.json(clinic);
-        } else {
-          return res.status(400).end('Clinic Not Found');
-        }
+    var timeInput = req.params.time;
+
+    Clinic.findById(req.params.id) {
+
     });
 
+
 });
+*/
 
 app.get('/doctor/:id', function(req, res) {
   // returns infromation about a doctor (user with isDoctor as true)
@@ -731,6 +738,36 @@ router.get('/user/current', isAuthenticated, function(req, res) {
   });
 });
 
+router.get('/clinic/locations/search', function(req, res) {
+
+  var limit = req.query.limit || 10;
+
+  // get the max distance or set it to 80.4672 kilometers (50 miles)
+  var maxDistance = req.query.distance || 80.4672;
+
+  // raduis of Earth is approximately 6371 kilometers
+  maxDistance /= 6371;
+
+  // get coordinates [ <longitude> , <latitude> ]
+  var coords = [];
+  coords[0] = req.query.longitude || 0;
+  coords[1] = req.query.latitude || 0;
+
+  // find a location
+  Location.find({
+    loc: {
+      $near: coords,
+      $maxDistance: maxDistance
+    }
+  }).limit(limit).exec(function(err, locations) {
+    if (err) {
+      return res.json(500, err);
+    }
+
+    res.json(200, locations);
+  });
+
+});
 
 
 app.listen(server_port, server_ip_address, function () {
