@@ -1,7 +1,20 @@
+<style>
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+</style>
+
   <div class="col-md-9 clearfix">
 
     <div class="form-group">
-      <label for="exampleSelect1">Spots preset(s)</label> <a href="">Edit</a> - <a href="">Create</a> - <a href="">Delete</a>
+      <label for="exampleSelect1">Spots preset(s)&nbsp;</label> <a href="">Edit</a> - <a href="">Create</a> - <a href="">Delete</a>
       <select class="form-control" id="exampleSelect1">
         <option>Default</option>
         <option>Thursday</option>
@@ -28,11 +41,21 @@
          </ul>
       </div>
 
-      <div>
-        <h4>Set Date</h4>
-      </div>
+      <hr>
+
+      <h4>Choose Date for Spots</h4>
+
+      <pre>Selected: <em>{{vm.dt | date:'fullDate' }}</em></pre>
+
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.dt" is-open="vm.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="vm.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
 
       <a href="">
         <button type="button" class="btn btn-primary" style="width: 100%">Create Spots for Desired Date</button>
       </a>
-    </div>
+
+      <br>

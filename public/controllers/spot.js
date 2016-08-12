@@ -7,7 +7,6 @@ angular.module('docAPPTapp')
     vm.markAsComplete = markAsComplete;
     vm.markAsIncomplete = markAsIncomplete;
     vm.getTotalTasks = getTotalTasks;
-    vm.calculatePercent = calculatePercent;
 
     vm.tasks = [
       '8:30 AM',
@@ -50,9 +49,32 @@ angular.module('docAPPTapp')
       return vm.tasks.length + vm.completedTasks.length;
     }
 
-    function calculatePercent(count) {
-      var total = vm.getTotalTasks();
-      return Math.round(100 / total * count);
-    }
+      // date picking
+
+      vm.today = function() {
+        vm.dt = new Date();
+      };
+
+      // run today() function
+      vm.today();
+
+      // setup clear
+      vm.clear = function () {
+        vm.dt = null;
+      };
+
+      // open min-cal
+      vm.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        vm.opened = true;
+        console.log('ffs can somehting work here');
+      };
+
+      // handle formats
+      vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+
+      // assign custom format
+      vm.format = vm.formats[0];
 
 });
