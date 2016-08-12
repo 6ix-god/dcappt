@@ -131,6 +131,10 @@ var clinicSchema = new mongoose.Schema({
   state: String,
   country: String,
   availableTimes: [],
+  spots: [{
+    date: String, // MM-DD-YYYY format
+    times: [] // times
+  }],
   appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }]
 });
 
@@ -572,6 +576,35 @@ app.post('/panel/doctor/leave/:id', isAuthenticated, function(req, res, next) {
       res.send(200); // user has been succsefully removed from clinc
     });
   });
+});
+
+router.post('/panel/spots/add', isAuthenticated, function(req, res, next) {
+
+  if (req.user.isAdmin === false) return res.status(400).send({message: 'Why are you here lol?'});
+
+  console.log(req.body);
+  var times = req.body.times;
+  var date = req.body.date;
+  var usersCinic; // id of the users clinic
+
+  // find clinic of the user
+  Clinic.findOne({ doctors: req.user.id }, function(err, clinic) {
+
+    if (err) return next(err);
+
+    var spotsData = {
+      date: req.body.date,
+      times: req.body.times
+    };
+
+    clinic.spots.push(spotsData);
+    clinic.save(function(err) {
+      if (err) return next(err);
+      res.send(200);
+    });
+
+  });
+
 });
 
 // admin panel for approving doctos as staff for the service

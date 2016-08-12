@@ -1,4 +1,4 @@
-angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ui.router', 'mgcrea.ngStrap', 'mwl.calendar', 'ui.bootstrap'])
+angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ui.router', 'mgcrea.ngStrap', 'mwl.calendar', 'ui.bootstrap', 'angularMoment'])
   .config(function ($stateProvider, $locationProvider, $httpProvider, $urlRouterProvider) {
 
     $httpProvider.interceptors.push('AuthInterceptor');
@@ -46,7 +46,7 @@ angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ui.router', 'mgcrea.n
         templateUrl: 'views/currentUsertest.html',
         controller: 'currentUserCtrl'
       })
-      .state('admin.submissions', {
+      .state('admin', {
         url: '/admin',
         templateUrl: 'views/admin.html',
         controller: 'AdminCtrl'
@@ -57,22 +57,22 @@ angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ui.router', 'mgcrea.n
         controller: 'PanelCtrl'
       })
       .state('clinicPanel.requests', {
-        url: '/panel/clinic/requests',
+        url: '/requests',
         templateUrl: 'views/clinicPanel/requests.html',
         controller: 'PanelCtrl'
       })
       .state('clinicPanel.calander', {
-        url: '/panel/clinic/calander',
+        url: '/calander',
         templateUrl: 'views/clinicPanel/calander.html',
         controller: 'CalendarCtrl as vm'
       })
       .state('clinicPanel.addAppointment', {
-        url: '/panel/clinic/add/appointment',
+        url: '/add/appointment',
         templateUrl: 'views/clinicPanel/addAppointment.html',
         controller: 'addAppointmentCtrl'
       })
       .state('clinicPanel.addSpot', {
-        url: '/panel/clinic/add/spot',
+        url: '/add/spot',
         templateUrl: 'views/clinicPanel/addSpot.html',
         controller: 'addSpotCtrl as vm'
       });

@@ -9,9 +9,17 @@
     border-radius: 32px;
     color: black;
   }
+  .demo {
+    text-align: left;
+  }
+  .demo .input-group-btn:last-child > .btn {
+    margin-top: 0px;
+  }
 </style>
 
   <div class="col-md-9 clearfix">
+
+
 
     <div class="form-group">
       <label for="exampleSelect1">Spots preset(s)&nbsp;</label> <a href="">Edit</a> - <a href="">Create</a> - <a href="">Delete</a>
@@ -43,19 +51,26 @@
 
       <hr>
 
-      <h4>Choose Date for Spots</h4>
+      <form ng-submit="vm.submit()">
 
-      <pre>Selected: <em>{{vm.dt | date:'fullDate' }}</em></pre>
+      <h4>Choose Date for Spot</h4>
 
-        <p class="input-group">
-          <input type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.dt" is-open="vm.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="vm.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-          </span>
-        </p>
+      <div class="demo">
 
-      <a href="">
-        <button type="button" class="btn btn-primary" style="width: 100%">Create Spots for Desired Date</button>
-      </a>
+        <pre><em>{{vm.dt | date: 'fullDate' }}</em></pre>
 
-      <br>
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.dt" is-open="vm.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+            <span class="input-group-btn">
+              <button style="height: 34px;" type="button" class="btn btn-default" ng-click="vm.open($event)">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
+            </span>
+          </p>
+
+      </div>
+
+      <button type="submit" type="button" class="btn btn-primary" style="width: 100%">Create Spots for Desired Date</button>
+
+    </form>
+    </div>

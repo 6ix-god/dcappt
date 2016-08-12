@@ -1,5 +1,5 @@
 angular.module('docAPPTapp')
-  .controller('AdminCtrl', function($scope, $http, $alert, $location, $route) {
+  .controller('AdminCtrl', function($scope, $http, $alert, $location, $state) {
 
     $http({
       method: 'GET',
@@ -20,7 +20,7 @@ angular.module('docAPPTapp')
     $scope.acceptSubmission = function(id) {
   		$http.put('/api/v1/admin/approve/' + id)
   			.success(function(data) {
-          $route.reload();
+          $state.reload();
           console.log(data);
           $alert({
               content: 'Clinic Added',
@@ -43,7 +43,7 @@ angular.module('docAPPTapp')
     $scope.rejectSubmission = function(id) {
       $http.delete('/api/v1/admin/decline/' + id)
         .success(function(data) {
-          $route.reload();
+          $state.reload();
           console.log(data);
           $alert({
               content: 'Clinic Rejected',

@@ -1,5 +1,5 @@
 angular.module('docAPPTapp')
-  .controller('addSpotCtrl', function($scope, $http) {
+  .controller('addSpotCtrl', function($scope, $http, moment, $alert, $location, $state) {
 
     var vm = this;
     vm.newTime = '';
@@ -59,7 +59,7 @@ angular.module('docAPPTapp')
       vm.today();
 
       // setup clear
-      vm.clear = function () {
+      vm.clear = function() {
         vm.dt = null;
       };
 
@@ -68,13 +68,28 @@ angular.module('docAPPTapp')
         $event.preventDefault();
         $event.stopPropagation();
         vm.opened = true;
-        console.log('ffs can somehting work here');
       };
 
       // handle formats
       vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
 
       // assign custom format
-      vm.format = vm.formats[0];
+      vm.format = vm.formats[3];
+
+      vm.submit = function() {
+        var formattedDate = moment(vm.dt).format('MM-DD-YYYY');
+        console.log("Formatted Date: " + formattedDate);
+        console.log("Times for " + formattedDate + ": " + vm.tasks);
+
+        $http.post('/api/v1/panel/spots/add', {
+          times: vm.tasks,
+          date: formattedDate
+        }).then(function success(response) {
+
+          $state.go('clinicPanel');
+
+        });
+
+      }
 
 });

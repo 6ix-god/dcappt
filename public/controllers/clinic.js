@@ -1,9 +1,8 @@
 angular.module('docAPPTapp')
-  .controller('ClinicCtrl', function($anchorScroll, $scope, $http, $alert, $location, $route, $routeParams) {
+  .controller('ClinicCtrl', function($anchorScroll, $scope, $http, $alert, $location, $stateParams) {
 
-    $anchorScroll();
 
-    $http.get('/api/v1/clinic/' + $routeParams.id)
+    $http.get('/api/v1/clinic/' + $stateParams.id)
       .success(function(data) {
 
         $scope.clinic = data;
