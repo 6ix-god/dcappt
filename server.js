@@ -13,6 +13,7 @@ var app = express();
 var moment = require('moment');
 var config = require('./config');
 var agenda = require('agenda')({ db: { address: config.mongoURI } });
+var cities = require('cities');
 
 var transporter = require('./email');
 
@@ -740,31 +741,32 @@ router.get('/user/current', isAuthenticated, function(req, res) {
 
 router.get('/clinic/locations/search', function(req, res) {
 
+  var zipToLongLang = cities.zip_lookup(req.query.zipcode);
+
   var limit = req.query.limit || 10;
 
-  // get the max distance or set it to 80.4672 kilometers (50 miles)
+  // get the max distance or set it to 80 kilometers (50 miles)
   var maxDistance = req.query.distance || 80.4672;
-
-  // raduis of Earth is approximately 6371 kilometers
   maxDistance /= 6371;
-
-  // get coordinates [ <longitude> , <latitude> ]
   var coords = [];
-  coords[0] = req.query.longitude || 0;
-  coords[1] = req.query.latitude || 0;
+
+  coords[0] = req.query.longitude || zipToLongLang.longitude;
+  coords[1] = req.query.latitude || zipToLongLang.latitude;
 
   // find a location
   Location.find({
-    loc: {
-      $near: coords,
-      $maxDistance: maxDistance
-    }
-  }).limit(limit).exec(function(err, locations) {
+      loc: {
+        $near: [
+          coords[0], // longitude
+          coords[1] // latitude
+        ],
+        $maxDistance: maxDistance
+      }
+    }).limit(limit).exec(function(err, locations) {
     if (err) {
       return res.json(500, err);
     }
-
-    res.json(200, locations);
+    res.json(200, { status: 'success', locations: locations });
   });
 
 });

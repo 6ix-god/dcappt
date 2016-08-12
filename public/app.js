@@ -1,61 +1,82 @@
-angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap', 'mwl.calendar', 'ui.bootstrap'])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
+angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ui.router', 'mgcrea.ngStrap', 'mwl.calendar', 'ui.bootstrap'])
+  .config(function ($stateProvider, $locationProvider, $httpProvider, $urlRouterProvider) {
 
-    $locationProvider.html5Mode(false);
     $httpProvider.interceptors.push('AuthInterceptor');
 
-    $routeProvider
-      .when('/', {
+    $urlRouterProvider.otherwise('/');
+
+    $stateProvider
+      .state('home', {
+        url: '/',
         templateUrl: 'views/home.html',
         controller: 'MainCtrl'
       })
-      .when('/clinic/:id', {
+      .state('clinic', {
+        url: '/clinic/:id',
         templateUrl: 'views/clinic.html',
         controller: 'ClinicCtrl'
       })
-      .when('/login', {
+      .state('login', {
+        url: '/login',
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'
       })
-      .when('/register', {
+      .state('register', {
+        url: '/register',
         templateUrl: 'views/register.html',
         controller: 'SignupCtrl'
       })
-      .when('/api', {
-        templateUrl: 'views/api.html',
-        controller: 'ApiCtrl'
-      })
-      .when('/email-test', {
-        templateUrl: 'views/searchtest.html',
-        controller: 'MainCtrl'
-      })
-      .when('/currentUser-test', {
-        templateUrl: 'views/currentUsertest.html',
-        controller: 'currentUserCtrl'
-      })
-      .when('/register/doctor', {
+      .state('register.doctor', {
+        url: '/register/doctor',
         templateUrl: 'views/doctorRegister.html',
         controller: 'doctorRegisterCtrl'
       })
-      .when('/admin', {
+      .state('api', {
+        url: '/api',
+        templateUrl: 'views/api.html',
+        controller: 'ApiCtrl'
+      })
+      .state('email-test', {
+        url: '/email-test',
+        templateUrl: 'views/searchtest.html',
+        controller: 'MainCtrl'
+      })
+      .state('currentUser-test', {
+        url: '/currentUser-test',
+        templateUrl: 'views/currentUsertest.html',
+        controller: 'currentUserCtrl'
+      })
+      .state('admin.submissions', {
+        url: '/admin',
         templateUrl: 'views/admin.html',
         controller: 'AdminCtrl'
       })
-      .when('/panel/clinic', {
+      .state('clinicPanel', {
+        url: '/panel/clinic',
         templateUrl: 'views/clinicPanel.html',
         controller: 'PanelCtrl'
       })
-      .when('/panel/calendar', {
-        templateUrl: 'views/calander.html',
+      .state('clinicPanel.requests', {
+        url: '/panel/clinic/requests',
+        templateUrl: 'views/clinicPanel/requests.html',
+        controller: 'PanelCtrl'
+      })
+      .state('clinicPanel.calander', {
+        url: '/panel/clinic/calander',
+        templateUrl: 'views/clinicPanel/calander.html',
         controller: 'CalendarCtrl as vm'
       })
-      .when('/panel/add/appointment', {
-        templateUrl: 'views/addAppointment.html',
+      .state('clinicPanel.addAppointment', {
+        url: '/panel/clinic/add/appointment',
+        templateUrl: 'views/clinicPanel/addAppointment.html',
         controller: 'addAppointmentCtrl'
       })
-      .otherwise({
-        redirectTo: '/'
+      .state('clinicPanel.addSpot', {
+        url: '/panel/clinic/add/spot',
+        templateUrl: 'views/clinicPanel/addSpot.html',
+        controller: 'addSpotCtrl as vm'
       });
+
   })
   .config(function ($httpProvider) {
     $httpProvider.interceptors.push(function ($rootScope, $q, $window, $location) {

@@ -1,0 +1,55 @@
+<div class="col-md-9 clearfix">
+   <h3 id="event-editor">
+      Create Appointment
+      <div class="clearfix"></div>
+   </h3>
+   <form ng-submit="appointmentForm()">
+      <table class="table table-bordered">
+         <thead>
+            <tr>
+               <th>Paitent</th>
+               <th>Note</th>
+               <th>Specialty</th>
+               <th>Starts at</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>
+                  Paitent's docAPPT Email:<br><br>
+                  <input
+                     placeholder="example@domain.com"
+                     type="text"
+                     class="form-control">
+               </td>
+               <td>
+                  <textarea class="form-control" rows="5" id="comment"></textarea>
+               </td>
+               <td>
+                  <select class="form-control" id="exampleSelect1">
+                     <option>1</option>
+                     <option>2</option>
+                     <option>3</option>
+                     <option>4</option>
+                     <option>5</option>
+                  </select>
+               </td>
+               <td>
+                  <center>
+                     <div style="display:inline-block; min-height:290px;">
+                        <div uib-datepicker ng-model="appointmentSubmission.date" class="well well-sm" datepicker-options="options"></div>
+                     </div>
+                     <uib-timepicker
+                        ng-model="appointmentSubmission.time"
+                        hour-step="1"
+                        minute-step="15"
+                        show-meridian="true">
+                     </uib-timepicker>
+                  </center>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      <button type="submit" class="btn btn-success" style="width: 100%">Create</button>
+   </form>
+</div>

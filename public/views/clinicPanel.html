@@ -1,3 +1,4 @@
+<br><br><br>
 <div class="container"><br>
    <section>
       <div class="page-header">
@@ -9,120 +10,51 @@
                   <small>Manage appointments and set available times.</small>
                </h1>
             </div>
-            <div class="col-md-3">
-
-            </div>
+            <div class="col-md-3"></div>
          </div>
       </div>
       <div class="row">
          <div class="col-md-3 forum-sidebar">
             <div class="collapse" id="subforum-list">
+
                <ul class="nav nav-pills nav-stacked">
-                 <a href ="#/panel/add/appointment">
+                 <a ui-sref=".addAppointment">
                    <button type="button" class="btn btn-primary" style="width: 100%">Create Appointment</button>
                  </a>
                  <br><br>
                </ul>
-               <h4>Appointments</h4>
-               <ul class="nav nav-pills nav-stacked">
-                  <li class="active">
-                     <a href="#/panel/clinic">Requests
-                     </a>
-                  </li>
-                  <li>
-                     <a href="">Upcoming
-                     </a>
-                  </li>
-                  <li>
-                     <a href="">Past
-                     </a>
-                  </li>
+
                </ul>
-               <h4>Paitents</h4>
-               <ul class="nav nav-pills nav-stacked">
-                  <li>
-                     <a href="">Past Paitents
-                     </a>
-                  </li>
-               </ul>
+
                <h4>Scheduling</h4>
                <ul class="nav nav-pills nav-stacked">
+                 <li>
+                 </li>
                   <li>
-                     <a href="">Today
-                     </a>
+                     <a ui-sref=".requests">Requests</a>
                   </li>
                   <li>
-                     <a href="#/panel/calendar">Calander
-                     </a>
+                      <a ui-sref=".calander">Calander</a>
+                  </li>
+                  <li>
+                      <a ui-sref=".addSpot">Add Spots</a>
                   </li>
                </ul>
             </div>
          </div>
-         <div class="col-md-9 clearfix">
-            <div class="forum-header">
-               <h3>What's New</h3>
-            </div>
-            <div class="listing">
-               <div class="row headings">
-                  <div class="col-xs-12 col-sm-7" style="padding-left: 45px;">Paitent Name</div>
-                  <div class="hidden-xs col-sm-3 col-sm-offset-0">Date</div>
-                  <div class="hidden-xs col-sm-1 text-center">Time</div>
-               </div>
-               <div class="row topic" ng-repeat="submission in submissions">
-                  <div class="col-xs-12 col-sm-7">
-                     <div class="topic-listing-entry">
-                        <div class="topic-listing-entry-title">
-                          <span>
-                           <a href="" data-toggle="collapse" data-target="#{{submission.applicant.id}}Collapse" aria-expanded="false" aria-controls="{{submission.applicant.id}}Collapse">{{submission.clinicName}}</a>
-                           &nbsp;
-                           <a class="label" style="background-color: #FFEE58; color: white" href="#">Pending</a>
-                         </span>
-                           <div>
 
-                          </div>
-                        </div>
-                        <small class="started-by">
-                        {{submission.street}}, {{submission.city}} {{submission.state}} {{submission.zipCode}}. {{submission.country}}
-                        </small>
-                     </div>
-                  </div>
-                  <div class="col-xs-12 col-sm-3">
-                     <div style="position:relative">
-                        <a class="pull-left hidden-xs" style="position:relative; margin: 4px 5px 0 0;">
-                        <img style="width: 32px;height: 32px;border-radius: 3px;vertical-align: bottom;" width="32" height="32" class="avatar" src="https://lh3.googleusercontent.com/-hMc92L1bTw4/AAAAAAAAAAI/AAAAAAAAAAA/q7C3_uBZp2w/photo.jpg" alt="Called_" title="Called_">
-                        </a>
-                        <div class="latest-post">
-                           <span class="visible-xs-inline">
-                           </span>
-                           <a style="color: #08c; " href="/Called_">{{submission.applicant.firstName}} {{submission.applicant.lastName}}</a>
-                           <div class="visible-xs-inline visible-sm-block visible-md-block visible-lg-block">
-                              <i class="fa fa-phone" aria-hidden="true"></i><small>&nbsp;{{submission.phoneNumber}} (clinic)</small>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="hidden-xs col-sm-2">
-                     <p id="dateCreated">{{submission.dateCreated}}</p>
-                  </div>
-                  <br><br>
-                   <div class="collapse" id="{{submission.applicant.id}}Collapse">
-                     <div class="thumbnail center-block img-responsive">
-                       <b>Medical License Number:</b> {{submission.medicalLicenseNumber}}
-                       <br>
-                       <b>Applicant's Email:</b> <a href="mailto:{{submission.applicant.email}}">{{submission.applicant.email}}</a>
-                       <br>
-                       <b>Description:</b> {{submission.description}}
-                       <br>
-                     </div>
-                     <button type="button" class="btn btn-success" ng-click="acceptSubmission(submission.id)">Accept</button>
-                     <button type="button" class="btn btn-danger" ng-click="rejectSubmission(submission.id)">Reject</button>
-                   </div>
-               </div>
-            </div>
-         </div>
+        <div ui-view></div>
+
       </div>
    </section>
 </div>
+
+<script>
+
+  $('#navbar').css('background-color', '#64B5F6');
+  $('#navbar').css('border-color', '#64B5F6');
+
+</script>
 
 <script>
 

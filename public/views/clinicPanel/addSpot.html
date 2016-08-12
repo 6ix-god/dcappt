@@ -1,0 +1,38 @@
+  <div class="col-md-9 clearfix">
+
+    <div class="form-group">
+      <label for="exampleSelect1">Spots preset(s)</label> <a href="">Edit</a> - <a href="">Create</a> - <a href="">Delete</a>
+      <select class="form-control" id="exampleSelect1">
+        <option>Default</option>
+        <option>Thursday</option>
+        <option>Saturday</option>
+      </select>
+    </div>
+
+      <div class="task-list">
+         <ul>
+            <li ng-repeat="task in vm.tasks" class="task">
+               {{ task }}<a ng-click="vm.markAsComplete($index)"><i class="fa fa-close"></i></a>
+            </li>
+         </ul>
+         <form ng-submit="vm.add(vm.newTask)">
+            <div class="form-group">
+               <input ng-model="vm.newTask" type="text" placeholder="Type new time slot and hit enter (Example: 10:30 AM)" class="form-control"/>
+            </div>
+         </form>
+      </div>
+      <div class="task-list">
+         <h4>Removed Times</h4>
+         <ul>
+            <li ng-repeat="task in vm.completedTasks" class="completed-task">{{ task }}<a ng-click="vm.markAsIncomplete($index)"><i class="fa fa-undo"></i></a></li>
+         </ul>
+      </div>
+
+      <div>
+        <h4>Set Date</h4>
+      </div>
+
+      <a href="">
+        <button type="button" class="btn btn-primary" style="width: 100%">Create Spots for Desired Date</button>
+      </a>
+    </div>

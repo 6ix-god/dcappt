@@ -3,7 +3,7 @@
       <meta content="width=device-width, initial-scale=1" name="viewport">
       <meta content="#337AB7" name="theme-color">
       <title>docAPPT</title>
-      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/bootstrap.css">
       <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Lato:700,400,300">
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css">
       <link href="css/angular-bootstrap-calendar.css" rel="stylesheet">
@@ -11,10 +11,11 @@
       <link rel="stylesheet" href="css/animate.css">
       <script src="https://static.oc.tc/assets/libraries-912fd655d5f42721ec0f4b257ad9e600219d21f56ed23b0125feaf20b7f6e28e.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
       <style type="text/css">.cf-hidden { display: none; } .cf-invisible { visibility: hidden; }</style>
    </head>
    <body style="display: block;">
-      <nav class="navbar navbar-default navbar-fixed-top" id="navbar" style="background-color: #64B5F6; border-color: #64B5F6;">
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar" style="background-color: #64B5F6; border-color: #64B5F6;">
          <div class="container">
             <div class="navbar-header">
                <button class="navbar-toggle collapsed" data-target="#top-navbar-collapse" data-toggle="collapse">
@@ -22,15 +23,15 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
                </button>
-               <a class="navbar-brand" href="#/">
-               <img class="pull-left" src="">
+               <a class="navbar-brand" ui-sref="#">
+               <img class="pull-left">
                <p style="color: white;">docAPPT</p>
                </a>
             </div>
             <div ng-controller="NavbarCtrl" class="navbar-collapse collapse" id="top-navbar-collapse">
                <ul class="nav navbar-nav">
-                  <li data-match-route="/$">
-                     <a href="#/" style="font-weight: 300; color: white;">
+                  <li>
+                     <a ui-sref="home" style="font-weight: 300; color: white;">
                      <i class="fa fa-home"></i> Home
                      </a>
                   </li>
@@ -79,33 +80,33 @@
                        <b class="caret"></b>
                        </a>
                        <ul class="dropdown-menu">
-                          <li data-match-route="/api">
-                             <a href="#/api">
+                          <li>
+                             <a ui-sref="api">
                              <i class="fa fa-book"></i>
                              Documentation
                              </a>
                           </li>
-                          <li data-match-route="/email-test">
-                             <a href="#/email-test">
+                          <li>
+                             <a ui-sref="email-test">
                              <i class="fa fa-wrench"></i>
                              Email Autocomplete Search Test
                              </a>
                           </li>
-                          <li data-match-route="/currentUser-test">
-                             <a href="#/currentUser-test">
+                          <li>
+                             <a ui-sref="currentUser-test">
                              <i class="fa fa-wrench"></i>
                              Current User Search Test
                              </a>
                           </li>
                        </ul>
                     </li>
-                    <li data-match-route="#/panel/clinic">
-                       <a href="#/panel/clinic" style="font-weight: 300; color: white;">
+                    <li>
+                       <a ui-sref="clinicPanel" style="font-weight: 300; color: white;">
                        <i class="fa fa-columns"></i> Clinic Panel
                        </a>
                     </li>
-                    <li data-match-route="#/admin">
-                       <a href="#/admin" style="font-weight: 300; color: white;">
+                    <li>
+                       <a ui-sref="admin.submissions" style="font-weight: 300; color: white;">
                        <i class="fa fa-lock"></i> Admin Panel
                        </a>
                     </li>
@@ -122,10 +123,10 @@
                         <b class="caret"></b>
                      </a>
                      <ul class="dropdown-menu dropdown-menu-right" ng-if="!currentUser">
-                        <li data-match-route="/login">
+                        <li>
                            <a href="#/login">Login</a>
                         </li>
-                        <li data-match-route="/register">
+                        <li>
                            <a href="#/register">Register</a>
                         </li>
                      </ul>
@@ -140,7 +141,7 @@
          </div>
       </nav>
 
-      <div ng-view class="{{pageClass}}"></div>
+    <div ui-view></div>
 
 
     <div class="container">
@@ -202,7 +203,7 @@
                   <li>
                      <a class="inquiry" data-toggle="modal" href="#contact">Bug Reports</a>
                   </li>
-                  <li data-match-route="#/register/doctor">
+                  <li>
                      <a class="inquiry" data-toggle="modal" href="#/register/doctor">Register as a Doctor</a>
                   </li>
                </ul>
@@ -240,12 +241,11 @@
 
       </body>
 
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
       <script src="vendor/angular-strap.js"></script>
       <script src="vendor/angular-strap.tpl.js"></script>
       <script src="vendor/angular-messages.js"></script>
       <script src="vendor/angular-resource.js"></script>
-      <script src="vendor/angular-route.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
       <script src="vendor/angular-animate.js"></script>
       <script src="vendor/moment.js"></script>
       <script src="vendor/angular-bootstrap-calendar.js"></script>
@@ -256,6 +256,7 @@
       <script src="app.js"></script>
       <script src="controllers/clinicPanel.js"></script>
       <script src="services/auth.js"></script>
+      <script src="controllers/test.js"></script>
       <script src="controllers/main.js"></script>
       <script src="controllers/navbar.js"></script>
       <script src="controllers/api.js"></script>
@@ -265,6 +266,7 @@
       <script src="controllers/doctorRegister.js"></script>
       <script src="controllers/admin.js"></script>
       <script src="controllers/clinic.js"></script>
+      <script src="controllers/spot.js"></script>
 
 
       <script src="helpers/cal.js"></script>
