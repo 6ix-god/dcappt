@@ -19,7 +19,7 @@ var transporter = require('./email');
 
 var server_port = process.env.PORT || 8080;
 var server_ip_address = '127.0.0.1';
-app.listen(port);
+app.listen(server_port);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
