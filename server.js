@@ -19,6 +19,7 @@ var transporter = require('./email');
 
 var server_port = process.env.PORT || 8080;
 var server_ip_address = '127.0.0.1';
+app.listen(port);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -832,9 +833,9 @@ router.get('/clinic/locations/search', function(req, res) {
 });
 
 
-app.listen(server_port, server_ip_address, function () {
-    console.log("Server is Running on port " + server_port + " and located on " + server_ip_address);
-});
+
+console.log("Server is Running on port " + server_port + " and located on " + server_ip_address);
+
 
 agenda.define('send email alert', function(job, done) {
 
