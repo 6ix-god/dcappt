@@ -22,7 +22,7 @@
 
 
     <div class="form-group">
-      <label for="exampleSelect1">Spots preset(s)&nbsp;</label> <a href="">Edit</a> - <a href="">Create</a> - <a href="">Delete</a>
+      <label for="exampleSelect1">Spots preset (not working yet)&nbsp;</label> <a href="">Edit</a> - <a href="">Create</a> - <a href="">Delete</a>
       <select class="form-control" id="exampleSelect1">
         <option>Default</option>
         <option>Thursday</option>
@@ -60,12 +60,12 @@
         <pre><em>{{vm.dt | date: 'fullDate' }}</em></pre>
 
           <p class="input-group">
-            <input type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.dt" is-open="vm.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
             <span class="input-group-btn">
               <button style="height: 34px;" type="button" class="btn btn-default" ng-click="vm.open($event)">
                 <i class="glyphicon glyphicon-calendar"></i>
               </button>
             </span>
+            <input type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.dt" is-open="vm.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
           </p>
 
       </div>

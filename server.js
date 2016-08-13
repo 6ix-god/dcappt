@@ -100,7 +100,7 @@ userSchema.options.toJSON.transform = function (doc, ret) {
 var appointmentSchema = new mongoose.Schema({
   doctor: { type: Schema.Types.ObjectId, ref: 'User' },
   clinic: { type: Schema.Types.ObjectId, ref: 'Clinic' },
-  paitent: { type: Schema.Types.ObjectId, ref: 'User' },
+  patient: { type: Schema.Types.ObjectId, ref: 'User' },
   specialtySetForAppointment: String,
   approved: Boolean,
   dateAndTime: Date,
@@ -121,7 +121,7 @@ appointmentSchema.options.toJSON.transform = function (doc, ret) {
 var clinicSchema = new mongoose.Schema({
   appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }],
   name: String,
-  paitents: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  patients: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   doctors: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   description: String,
   phoneNumber: String,
@@ -168,7 +168,7 @@ var scheduleSchema = new mongoose.Schema({
   startsAt: Date, // iso 8601
   appointment: { type: Schema.Types.ObjectId, ref: 'Appointment' },
   clinic: { type: Schema.Types.ObjectId, ref: 'Clinic' },
-  paitent: { type: Schema.Types.ObjectId, ref: 'User' }
+  patient: { type: Schema.Types.ObjectId, ref: 'User' }
 },
 {
   toObject: { virtuals: true },
@@ -375,7 +375,7 @@ router.post('/login', function(req, res, next) {
 app.post('/user/request/appointment', isAuthenticated, function(req, res) {
 
   // user requests appointments as a normal user
-  var fields = ['clinicID', 'paitent', 'specialtySetForAppointment', 'dateAndTime'], field;
+  var fields = ['clinicID', 'patient', 'specialtySetForAppointment', 'dateAndTime'], field;
 
   for (var i = 0; i < fields.length; i++) {
     field = fields[i];
@@ -386,7 +386,7 @@ app.post('/user/request/appointment', isAuthenticated, function(req, res) {
 
   var newAppointment = new Appointment();
   newAppointment.clinic = req.body.clinicID;
-  newAppointment.paitent = req.body.userID;
+  newAppointment.patient = req.body.userID;
   newAppointment.specialtySetForAppointment = req.body.specialtySetForAppointment;
   newAppointment.dateAndTime = req.body.dateAndTime;
   newAppointment.save();
@@ -407,18 +407,23 @@ router.get('/clinic/:id', function(req, res) {
 });
 
 
-/* TODO
+
 router.get('/clinic/times/:id/:date', function(req, res) {
 
-    var timeInput = req.params.time;
-
-    Clinic.findById(req.params.id) {
-
+    Clinic.findOne({
+      _id: req.params.id,
+      'spots.date': req.params.date
+    }, {
+      'spots.$': 1
+    }, function(err, clinic) {
+      if (err || !clinic ) {
+        res.status(400).send({message: 'No results avaiable, for your selection during this time.'});
+      } else {
+        res.json(clinic.spots[0]);
+      }
     });
 
-
 });
-*/
 
 app.get('/doctor/:id', function(req, res) {
   // returns infromation about a doctor (user with isDoctor as true)
@@ -465,14 +470,9 @@ app.post('/panel/approve/:id', isAuthenticated, function(req, res) {
 router.post('/panel/create', isAuthenticated, function(req, res) {
 
   // TODO: Create an Appointment as a doctor [x]
-  // 1. Creates an Appointment to appointmentSchema [x]
-  // 2. Adds paitent to paitents array in clinicSchema [x]
-  // 3. Adds appointment ID to appointments array under clinicSchema [x]
-  // 4. Add appointment ID to paitents appointments array in userSchema [x]
-  // 5. Creates scheduleSchema adding the appointment id, clinic id, and paitent id. [x]
   // 6. Sends email to user that appointment has been created []
 
-  var fields = ['paitent', 'specialtySetForAppointment', 'dateAndTime', 'doctorsNote'], field;
+  var fields = ['patient', 'specialtySetForAppointment', 'dateAndTime', 'doctorsNote'], field;
 
   for (var i = 0; i < fields.length; i++) {
     field = fields[i];
@@ -510,17 +510,17 @@ router.post('/panel/create', isAuthenticated, function(req, res) {
       Clinic.findById(req.user.workplace, function(err, clinic) {
         if (err) return next(err);
         clinic.appointments.push(newAppointmentID);
-        clinic.paitents.push(req.body.paitent);
+        clinic.patients.push(req.body.patient);
         clinic.save(function(err) {
           if (err) return next(err);
-          console.log('User added to paitents array in clinic');
+          console.log('User added to patients array in clinic');
         });
       });
 
-      User.findById(req.body.paitent, function(err, paitent) {
+      User.findById(req.body.patient, function(err, patient) {
         if (err) return next(err);
-        paitent.appointments.push(newAppointmentID);
-        paitent.save(function(err) {
+        patient.appointments.push(newAppointmentID);
+        patient.save(function(err) {
           if (err) return next(err);
           console.log('Appointment added to user schema');
         });
@@ -532,7 +532,7 @@ router.post('/panel/create', isAuthenticated, function(req, res) {
       newSchedule.startsAt = req.body.dateAndTime;
       newSchedule.appointment = newAppointmentID;
       newSchedule.clinic = req.user.workplace;
-      newSchedule.paitent = req.body.paitent;
+      newSchedule.patient = req.body.patient;
       newSchedule.save(function(err) {
         if (err) return next(err);
         console.log('Schedule saved');
@@ -642,7 +642,7 @@ router.put('/admin/approve/:id', isAuthenticated, function(req, res) {
 
     var newClinic = new Clinic({
       name: submission.clinicName,
-      paitents: [],
+      patients: [],
       appointments: [],
       doctors: [submission.applicant.id],
       description: submission.description,
