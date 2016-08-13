@@ -11,20 +11,57 @@
       <h1>docAPPT</h1>
       <p>A new way for the paitent to save time<br> with a large variaty of options anytime and anywhere.</p>
 
-      <div id="suggestion" style="text-align: center;">
-        <input id="location-1" type="text" class="form-control typeahead" placeholder="Search Clinics via Name, Zip Code, Address, etc" data-provide="typeahead" autocomplete="off">
-      </div>
+      <div class="container">
+       <div class="row">
+         <a class="btn btn-primary btn-lg btn-success" href="/shutdown">Get Started »</a>
+        </div>
+       </div>
 
    </div>
 </div>
+
 <div class="bs-docs-social">
    <div class="container">
-      <ul class="bs-docs-social-buttons">
-         <li>Latest Announcements:</li>
-         <li>
-            <a data-placement="bottom" href="/" rel="tooltip" title="" data-original-title="Created 1 day ago">Alpha Soon!</a>
-         </li>
-      </ul>
+     <div class="col-md-12">
+              <div class="input-group" id="adv-search" >
+                  <input type="text" class="form-control" role="group" placeholder="Search via Zip Code" />
+                  <div class="input-group-btn">
+                      <div class="btn-group" role="group">
+                          <div class="dropdown dropdown-lg clearfix">
+                              <button type="button" style="height: 34px;" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                              <div class="dropdown-menu dropdown-menu-right" style="overflow: visible;" role="menu">
+                                  <form class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                      <label for="filter">Specialty</label>
+                                      <select class="form-control">
+                                          <option value="0" selected>Chiropractors</option>
+                                          <option value="1">Dentists</option>
+                                          <option value="2">Dermatologists</option>
+                                          <option value="3">Eye Doctors</option>
+                                          <option value="4">Gynecologists</option>
+                                      </select>
+                                    </div>
+                                    <div class="form-group">
+                                      <input class="form-control" placeholder="Distance (miles)" type="text" />
+                                    </div>
+                                    <div class="form-group">
+                                      <input class="form-control" placeholder="Date" type="text" />
+                                    </div>
+                                    <a type="button" style="width: 100%;" class="btn btn-primary">
+                                      <i class="fa fa-search" aria-hidden="true"></i>
+                                      Search
+                                    </a>
+                                  </form>
+                              </div>
+                          </div>
+                          <button type="button" style="width: 100%;"class="btn btn-primary">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                            Search
+                          </button>
+                      </div>
+                  </div>
+              </div>
+            </div>
    </div>
 </div>
 <div class="container">
@@ -55,6 +92,8 @@
             <a class="btn btn-default" href="/play">User Feedback</a>
          </p>
       </div>
+   </div>
+
    </div>
 
   </div>

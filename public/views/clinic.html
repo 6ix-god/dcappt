@@ -58,12 +58,12 @@
         <p ng-show="times"><i class="fa fa-clock-o fa-lg"></i> Available Times: &nbsp;</p>
 
         <span ng-show="times" ng-repeat="time in times" style="line-height: 30px; padding-top: 10px;">
-          <a class="label" style="font-weight: 300; background-color: #64B5F6; border-radius: 25px; color: white; font-size: 100%;" href="">
+          <a
+            class="label"
+            style="font-weight: 300; background-color: #64B5F6; border-radius: 25px; color: white; font-size: 100%;"
+            tooltip="Click, to book appointment for this desired time.">
             {{time}}
           </a>&nbsp;
-        </span>
-
-
         </span>
 
          </div>
@@ -284,5 +284,9 @@
 
   $('#navbar').css('background-color', '#64B5F6');
   $('#navbar').css('border-color', '#64B5F6');
+
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 
 </script>

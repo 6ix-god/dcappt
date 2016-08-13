@@ -37,25 +37,6 @@
                   </li>
                   <li class="dropdown">
                      <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="font-weight: 300; color: white;">
-                     <i class="fa fa-user-md"></i> Doctors
-                     <b class="caret"></b>
-                     </a>
-                     <ul class="dropdown-menu">
-                        <li>
-                           <a href="/" style="color: white;">
-                           <i class="fa fa-star"></i>
-                           Rankings
-                           </a>
-                        </li>
-                        <li>
-                        </li>
-                        <form class="player-search">
-                           <input class="input-sm form-control" id="player-search" name="search" placeholder="Search for a doctor" type="text">
-                        </form>
-                     </ul>
-                  </li>
-                  <li class="dropdown">
-                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="font-weight: 300; color: white;">
                      <i class="fa fa-building-o"></i> Clinics
                      <b class="caret"></b>
                      </a>
@@ -111,9 +92,30 @@
                        </a>
                     </li>
 
+
+
                </ul>
+
+
                <hr class="visible-xs visible-sm" style="margin: 4px; border-color: #e7e7e7;">
                <ul class="nav navbar-nav pull-right">
+
+
+                 <div id="suggestion" class="navbar-collapse navbar-left collapse" style="padding-top: 10;">
+
+                   <form class="search-form">
+                     <div class="form-group has-feedback">
+                       <label for="search" class="sr-only">Search</label>
+                       <input type="text" id="location-1" class="form-control typeahead" name="search" data-provide="typeahead" placeholder="Search Clinic">
+                       <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                     </div>
+                   </form>
+
+                </div>
+
+
+
+
                   <li class="dropdown">
                      <a class="dropdown-toggle" data-toggle="dropdown" style="outline: none; color: white;" aria-expanded="false">
                         <i class="fa fa-user"></i>
@@ -276,54 +278,6 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 
-      <script>
-        function sug(response){
-          console.log(response);
-        };
-
-        (function(document, jQuery){
-
-          var source = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            identify: function(obj) { console.log(obj); return obj.email; },
-            remote: {
-              url: '/autocomplete/email?query=%QUERY',
-              wildcard: '%QUERY'
-            }
-          });
-
-          console.log(source);
-
-          jQuery(document).ready(function(){
-
-            jQuery('#suggestion .typeahead').typeahead({
-              hint: true,
-              highlight: true,
-              minLength: 2
-            }, {
-              name: 'muse-suggesions',
-              display: 'value',
-              source: source,
-              limit: 15,
-              templates: {
-                empty: [].join('\n'),
-                suggestion: Handlebars.compile('<div>{{email}}</div>')
-              }
-            });
-
-            jQuery('#suggestion .typeahead').bind('typeahead:select', function(ev, suggestion) {
-              console.log('Selection Object: ', suggestion);
-              console.log('Email: ', suggestion.email);
-              console.log('Id: ', suggestion.id);
-              // window.location = "/user/" + this.id; - go to link with uder id
-            });
-          });
-
-
-        }(document, jQuery));
-
-      </script>
 
    </body>
 
