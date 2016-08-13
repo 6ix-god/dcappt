@@ -123,6 +123,10 @@ var clinicSchema = new mongoose.Schema({
   name: String,
   patients: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   doctors: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  loc: {
+    type: [Number],
+    index: '2d'
+  },
   description: String,
   phoneNumber: String,
   zipCode: String,
@@ -132,8 +136,8 @@ var clinicSchema = new mongoose.Schema({
   country: String,
   availableTimes: [],
   spots: [{
-    date: String, // MM-DD-YYYY format
-    times: [] // times
+    date: String,
+    times: []
   }],
   appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }]
 });
@@ -776,10 +780,11 @@ router.get('/clinic/locations/search', function(req, res) {
 
   var zipToLongLang = cities.zip_lookup(req.query.zipcode);
 
+  console.log(zipToLongLang);
+
   var limit = req.query.limit || 10;
 
-  // get the max distance or set it to 80 kilometers (50 miles)
-  var maxDistance = req.query.distance || 80.4672;
+  var maxDistance = req.query.distance || 80; // 50 miles
   maxDistance /= 6371;
   var coords = [];
 
@@ -787,19 +792,17 @@ router.get('/clinic/locations/search', function(req, res) {
   coords[1] = req.query.latitude || zipToLongLang.latitude;
 
   // find a location
-  Location.find({
+  Clinic.find({
       loc: {
-        $near: [
-          coords[0], // longitude
-          coords[1] // latitude
-        ],
-        $maxDistance: maxDistance
+        $within: {
+          $centerSphere: [[coords[0], coords[1]], maxDistance]
+        }
       }
     }).limit(limit).exec(function(err, locations) {
     if (err) {
       return res.json(500, err);
     }
-    res.json(200, { status: 'success', locations: locations });
+    res.json(200, locations);
   });
 
 });
