@@ -377,7 +377,7 @@ router.post('/login', function(req, res, next) {
 
 });
 
-app.post('/user/request/appointment', isAuthenticated, function(req, res) {
+app.post('/clinic/request/appointment', isAuthenticated, function(req, res) {
 
   // user requests appointments as a normal user
   var fields = ['clinicID', 'patient', 'specialtySetForAppointment', 'dateAndTime'], field;

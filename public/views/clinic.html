@@ -1,18 +1,28 @@
 <script type="text/ng-template" id="myModalContent.html">
     <div class="modal-header">
         <h3 class="modal-title">Book an appointment at {{clinicData.name}}</h3>
-        <small>at {{time}} on {{formattedTime}}</small>
+        <small>{{time}} on {{formattedTime}}</small>
+        <br>
+        <small style="color: gray;">We won't share this data with anymore. If necessary, if we need to contact you we will contact you by email or phone number associated with your docAPPT account.</small>
     </div>
     <div class="modal-body">
-        <ul>
-            <li ng-repeat="item in items">
-                <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-            </li>
-        </ul>
-        Selected: <b>{{ selected.item }}</b>
+      <div class="form-group">
+        <label for="sel1">Reason for visit?</label>
+        <select class="form-control" id="sel1">
+          <option>X-Ray</option>
+          <option>Flu Shot</option>
+          <option>Foot Pain</option>
+          <option>Acne</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="comment">Anything you'd like to say?</label>
+        <textarea class="form-control" rows="5" id="comment"></textarea>
+      </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+        <button class="btn btn-primary" type="button" ng-click="ok()">Submit</button>
         <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
     </div>
 </script>
@@ -90,8 +100,7 @@
          </div>
          <div class="col-md-4">
             <img class="thumbnail center-block img-responsive" src="../imgs/placeholder.png">
-            <button type="button" class="btn btn-success" style="width: 100%"><i class="fa fa-bookmark" aria-hidden="true"></i>&nbsp;&nbsp;Book Appointment</button>
-            <br><br>
+
             <button type="button" class="btn btn-warning" style="width: 100%"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;&nbsp;Rate</button>
          </div>
       </div>
