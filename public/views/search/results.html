@@ -1,0 +1,31 @@
+<br><br><br><br>
+
+<div class="container">
+
+    <hgroup class="mb20">
+		    <h1>Search Results</h1>
+		    <h2 class="lead"><strong style="color: #2196F3;">{{ results.length | number }}</strong> results were found for the clinics nearby <strong style="color: #2196F3;">{{searchedZip}}</strong></h2>
+	  </hgroup>
+
+    <section class="col-xs-12 col-sm-6 col-md-12">
+    <br>
+
+		<article class="search-result row" ng-repeat="result in results">
+			<div class="col-xs-12 col-sm-12 col-md-3">
+				<a href="#" title="Lorem ipsum" class="thumbnail"><img src="../imgs/placeholder.png" alt="Lorem ipsum" /></a>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-2">
+				<ul class="meta-search">
+					<li><i class="glyphicon glyphicon-calendar"></i> <span>3 Spots open for today</span></li>
+					<li><i class="glyphicon glyphicon-time"></i> <span>Specialty's: {{result.specialtys}}</span></li>
+					<li><i class="glyphicon glyphicon-tags"></i> <span>{{result.city}}, {{result.state}}</span></li>
+				</ul>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-7">
+				<h3><a href="#" title="">{{result.name}}</a></h3>
+				<p>{{result.description}}</p>
+			</div>
+		</article>
+
+	</section>
+</div>

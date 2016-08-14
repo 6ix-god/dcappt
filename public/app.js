@@ -75,6 +75,11 @@ angular.module('docAPPTapp', ['ngResource', 'ngMessages', 'ui.router', 'mgcrea.n
         url: '/add/spot',
         templateUrl: 'views/clinicPanel/addSpot.html',
         controller: 'addSpotCtrl as vm'
+      })
+      .state('search', {
+        url: '/add/results?specialty&distance&date&zipCode',
+        templateUrl: 'views/search/results.html',
+        controller: 'searchCtrl'
       });
 
   })

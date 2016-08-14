@@ -20,20 +20,20 @@
    </div>
 </div>
 
+<form ng-submit="homeSearch()">
 <div class="bs-docs-social">
    <div class="container">
      <div class="col-md-12">
               <div class="input-group" id="adv-search" >
-                  <input type="text" class="form-control" role="group" placeholder="Search via Zip Code" />
+                  <input type="text" class="form-control" role="group" ng-model="zipCode" placeholder="Search via Zip Code" />
                   <div class="input-group-btn">
                       <div class="btn-group" role="group">
                           <div class="dropdown dropdown-lg clearfix">
                               <button type="button" style="height: 34px;" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-                              <div class="dropdown-menu dropdown-menu-right" style="overflow: visible;" role="menu">
-                                  <form class="form-horizontal" role="form">
+                              <div class="dropdown-menu dropdown-menu-right" style="overflow: visible; padding-bottom: 10px;" role="menu">
                                     <div class="form-group">
                                       <label for="filter">Specialty</label>
-                                      <select class="form-control">
+                                      <select class="form-control" ng-model="specialty">
                                           <option value="0" selected>Chiropractors</option>
                                           <option value="1">Dentists</option>
                                           <option value="2">Dermatologists</option>
@@ -41,26 +41,26 @@
                                           <option value="4">Gynecologists</option>
                                       </select>
                                     </div>
+                                    <br><br>
                                     <div class="form-group">
-                                      <input class="form-control" placeholder="Distance (miles)" type="text" />
+                                      <input class="form-control" ng-model="distance" placeholder="Distance (miles)" type="text" />
                                     </div>
+                                    <br><br>
                                     <div class="form-group">
-                                      <input class="form-control" placeholder="Date" type="text" />
+                                      <input ng-model="date" class="form-control" placeholder="Date" type="text" />
                                     </div>
-                                    <a type="button" style="width: 100%;" class="btn btn-primary">
-                                      <i class="fa fa-search" aria-hidden="true"></i>
-                                      Search
-                                    </a>
-                                  </form>
+                                    <br><br>
+
                               </div>
                           </div>
-                          <button type="button" style="width: 100%;"class="btn btn-primary">
+                          <button type="submit" type="button" style="width: 100%;"class="btn btn-primary">
                             <i class="fa fa-search" aria-hidden="true"></i>
                             Search
                           </button>
                       </div>
                   </div>
               </div>
+            </form>
             </div>
    </div>
 </div>
