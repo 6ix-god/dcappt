@@ -1,3 +1,21 @@
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Book an appointment at {{clinicData.name}}</h3>
+        <small>at {{time}} on {{formattedTime}}</small>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ selected.item }}</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
 <br><br><br><br>
 <div class="container">
    <section>
@@ -60,6 +78,8 @@
         <span ng-show="times" ng-repeat="time in times" style="line-height: 30px; padding-top: 10px;">
           <a
             class="label"
+            name="time"
+            ng-click="book(time)"
             data-placement="bottom"
             style="font-weight: 300; background-color: #64B5F6; border-radius: 25px; color: white; font-size: 100%;"
             tooltip="Click, to book appointment on {{time}}">

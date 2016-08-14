@@ -1,5 +1,5 @@
 angular.module('docAPPTapp')
-  .controller('ClinicCtrl', function($anchorScroll, $scope, $http, $alert, $location, $stateParams) {
+  .controller('ClinicCtrl', function($anchorScroll, $scope, $http, $alert, $location, $stateParams, $uibModal, $log) {
 
     $scope.currentDate = new Date();
 
@@ -8,8 +8,7 @@ angular.module('docAPPTapp')
 
         $scope.clinic = data;
         $scope.doctors = data.doctors;
-
-        console.log(data);
+        $scope.clinicData = data;
 
       })
       .error(function(data) {
@@ -33,6 +32,32 @@ angular.module('docAPPTapp')
           $scope.times = null;
           $scope.error = data.message;
         });
+    }
+
+    $scope.book = function(time) {
+
+      var dateToBook = moment($scope.dt).format('MM-DD-YYYY');
+
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'myModalContent.html',
+        controller: 'ModalInstanceCtrl',
+        size: 'lg',
+        resolve: {
+          bookingData: {
+            date: dateToBook,
+            time: time,
+            clinicData: $scope.clinicData
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+        $scope.selected = selectedItem;
+      }, function () {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+
     }
 
     // date picking
@@ -62,4 +87,23 @@ angular.module('docAPPTapp')
     // assign custom format
     $scope.format = $scope.formats[3];
 
+})
+.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, bookingData) {
+
+  console.log(bookingData.date);
+  console.log(bookingData.time);
+  console.log(bookingData.clinicData);
+
+  $scope.clinicData = bookingData.clinicData;
+  $scope.date = bookingData.date;
+  $scope.time = bookingData.time;
+  $scope.formattedTime = moment(bookingData.time, 'MM-DD-yyyy').format("MMM Do YYYY");
+
+  $scope.ok = function () {
+    $uibModalInstance.close($scope.selected.item);
+  };
+
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
 });
