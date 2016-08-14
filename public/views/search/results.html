@@ -5,6 +5,45 @@
     <hgroup class="mb20">
 		    <h1>Search Results</h1>
 		    <h2 class="lead"><strong style="color: #2196F3;">{{ results.length | number }}</strong> results were found for the clinics nearby <strong style="color: #2196F3;">{{searchedZip}}</strong></h2>
+                   <div class="input-group" id="adv-search" style="margin: 0;">
+                       <input type="text" class="form-control" role="group" ng-model="zipCode" placeholder="Search via Zip Code" />
+                       <div class="input-group-btn">
+                           <div class="btn-group" role="group">
+                               <div class="dropdown dropdown-lg clearfix">
+                                   <button type="button" style="height: 34px;" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                                   <div class="dropdown-menu dropdown-menu-right" style="overflow: visible; padding-bottom: 10px;" role="menu">
+                                         <div class="form-group">
+                                           <label for="filter">Specialty</label>
+                                           <select class="form-control" ng-model="specialty">
+                                               <option value="0" selected>Chiropractors</option>
+                                               <option value="1">Dentists</option>
+                                               <option value="2">Dermatologists</option>
+                                               <option value="3">Eye Doctors</option>
+                                               <option value="4">Gynecologists</option>
+                                           </select>
+                                         </div>
+                                         <br><br>
+                                         <div class="form-group">
+                                           <input class="form-control" ng-model="distance" placeholder="Distance (miles) / Default 15 miles" type="text" />
+                                         </div>
+                                         <br><br>
+                                         <div class="form-group">
+                                           <input ng-model="date" class="form-control" placeholder="Date" type="text" />
+                                         </div>
+                                         <br><br>
+
+                                   </div>
+                               </div>
+                               <button type="submit" type="button" style="width: 100%;"class="btn btn-primary">
+                                 <i class="fa fa-search" aria-hidden="true"></i>
+                                 Search
+                               </button>
+                           </div>
+                       </div>
+                   </div>
+                   <br>
+                 </form>
+
 	  </hgroup>
 
     <section class="col-xs-12 col-sm-6 col-md-12">
@@ -22,7 +61,7 @@
 				</ul>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-7">
-				<h3><a href="#" title="">{{result.name}}</a></h3>
+				<h3><a href="#/clinic/{{result._id}}" title="">{{result.name}}</a></h3>
 				<p>{{result.description}}</p>
 			</div>
 		</article>

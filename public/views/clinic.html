@@ -60,15 +60,16 @@
         <span ng-show="times" ng-repeat="time in times" style="line-height: 30px; padding-top: 10px;">
           <a
             class="label"
+            data-placement="bottom"
             style="font-weight: 300; background-color: #64B5F6; border-radius: 25px; color: white; font-size: 100%;"
-            tooltip="Click, to book appointment for this desired time.">
+            tooltip="Click, to book appointment on {{time}}">
             {{time}}
           </a>&nbsp;
         </span>
 
          </div>
          <div class="col-md-4">
-            <img class="thumbnail center-block img-responsive" src="http://photos2.zillowstatic.com/p_h/ISt82czh0i1eur1000000000.jpg">
+            <img class="thumbnail center-block img-responsive" src="../imgs/placeholder.png">
             <button type="button" class="btn btn-success" style="width: 100%"><i class="fa fa-bookmark" aria-hidden="true"></i>&nbsp;&nbsp;Book Appointment</button>
             <br><br>
             <button type="button" class="btn btn-warning" style="width: 100%"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;&nbsp;Rate</button>
