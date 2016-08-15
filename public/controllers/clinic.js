@@ -32,7 +32,7 @@ angular.module('docAPPTapp')
           $scope.times = null;
           $scope.error = data.message;
         });
-    }
+    };
 
     $scope.book = function(time) {
 
@@ -58,7 +58,7 @@ angular.module('docAPPTapp')
         $log.info('Modal dismissed at: ' + new Date());
       });
 
-    }
+    };
 
     // date picking
 
@@ -99,8 +99,20 @@ angular.module('docAPPTapp')
   $scope.time = bookingData.time;
   $scope.formattedTime = moment(bookingData.time, 'MM-DD-yyyy').format("MMM Do YYYY");
 
-  $scope.ok = function () {
-    $uibModalInstance.close($scope.selected.item);
+  $scope.dateAndTimeInISO = moment(bookingData.date + ' ' + bookingData.time, 'MM-DD-yyyy HH:mm A').format("MMM Do YYYY"); // CONVERT DATE AND TIME TO ISO
+
+  // 'clinicID', 'patient', 'specialtySetForAppointment', 'dateAndTime'
+
+  $scope.requestAppointment = function () {
+
+      $http.post('/api/v1/clinic/request/appointment', {
+        clinicID: vm.tasks,
+        date: formattedDate
+      }).then(function success(response) {
+        $state.go('clinicPanel');
+      });
+
+
   };
 
   $scope.cancel = function () {

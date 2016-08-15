@@ -90,6 +90,6 @@ angular.module('docAPPTapp')
 
         });
 
-      }
+      };
 
 });
